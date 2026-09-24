@@ -1,0 +1,71 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="100" y1="60" x2="1100" y2="1120" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#112E5C"/>
+      <stop offset="1" stop-color="#0A1A2E"/>
+    </linearGradient>
+    <linearGradient id="accent" x1="170" y1="150" x2="1010" y2="1010" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#86EFAC"/>
+      <stop offset="1" stop-color="#22C55E"/>
+    </linearGradient>
+    <linearGradient id="book" x1="430" y1="250" x2="760" y2="980" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#F8FAFC"/>
+      <stop offset="1" stop-color="#E2E8F0"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="1200" rx="52" fill="url(#bg)"/>
+  <circle cx="1030" cy="160" r="220" fill="#34D399" fill-opacity="0.12"/>
+  <circle cx="180" cy="1060" r="220" fill="#22C55E" fill-opacity="0.10"/>
+
+  <path d="M90 920C260 790 430 830 600 900C770 970 930 1000 1110 900V1200H90V920Z" fill="#081521" fill-opacity="0.42"/>
+
+  <g opacity="0.95">
+    <rect x="440" y="340" width="320" height="520" rx="18" fill="url(#book)" transform="rotate(-8 440 340)"/>
+    <rect x="470" y="360" width="260" height="480" rx="12" fill="#F8FAFC" transform="rotate(-8 470 360)"/>
+    <path d="M494 415H710" stroke="#14B8A6" stroke-width="8" stroke-linecap="round"/>
+    <path d="M494 470H688" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+    <path d="M494 525H704" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+    <path d="M494 580H677" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+    <path d="M494 635H700" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+    <path d="M494 690H650" stroke="#CBD5E1" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="595" cy="790" r="52" fill="#22C55E" fill-opacity="0.18"/>
+    <path d="M565 805L590 832L630 774" stroke="#16A34A" stroke-width="12" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+
+  <g>
+    <circle cx="290" cy="520" r="130" fill="#F8FAFC" fill-opacity="0.12"/>
+    <path d="M220 560C250 470 326 430 370 500C414 570 388 640 318 682C248 724 185 660 220 560Z" fill="url(#accent)"/>
+    <path d="M252 505C282 470 320 448 355 454C330 466 306 493 294 522C285 544 280 573 281 597C260 593 241 576 231 559C225 550 235 520 252 505Z" fill="#CFFAFE" fill-opacity="0.9"/>
+    <circle cx="296" cy="558" r="72" fill="#F8FAFC" fill-opacity="0.9"/>
+    <circle cx="298" cy="560" r="40" fill="#A7F3D0"/>
+    <path d="M336 613L374 692" stroke="#A7F3D0" stroke-width="18" stroke-linecap="round"/>
+    <path d="M246 618L210 708" stroke="#A7F3D0" stroke-width="18" stroke-linecap="round"/>
+    <path d="M286 642L292 760" stroke="#A7F3D0" stroke-width="18" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <path d="M872 452L930 328L988 452H872Z" fill="#F8FAFC" fill-opacity="0.16"/>
+    <path d="M930 274V452" stroke="#F8FAFC" stroke-opacity="0.68" stroke-width="10" stroke-linecap="round"/>
+    <path d="M880 520C915 486 947 493 980 520C1014 548 1014 610 980 646C947 682 915 690 880 651" stroke="#9AE6B4" stroke-width="18" stroke-linecap="round"/>
+    <path d="M884 532H977" stroke="#9AE6B4" stroke-width="18" stroke-linecap="round"/>
+    <path d="M930 456V248" stroke="#F8FAFC" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <path d="M135 255H435" stroke="#E2E8F0" stroke-opacity="0.35" stroke-width="5" stroke-linecap="round"/>
+    <path d="M790 255H1065" stroke="#E2E8F0" stroke-opacity="0.35" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <text x="90" y="165" fill="#E2E8F0" font-size="34" font-family="Georgia, serif" font-weight="700" letter-spacing="8">HAMARA</text>
+    <text x="90" y="220" fill="#7EE7B3" font-size="94" font-family="Georgia, serif" font-weight="700">BOOK</text>
+    <text x="90" y="312" fill="#F8FAFC" font-size="48" font-family="Arial, sans-serif" font-weight="700">School Education</text>
+    <text x="90" y="364" fill="#CBD5E1" font-size="28" font-family="Arial, sans-serif">Foundations &amp; Basics</text>
+  </g>
+
+  <g>
+    <path d="M820 880C890 830 950 840 1010 892" stroke="#22C55E" stroke-width="18" stroke-linecap="round"/>
+    <path d="M860 920C908 874 961 874 1015 930" stroke="#86EFAC" stroke-width="14" stroke-linecap="round"/>
+  </g>
+</svg>

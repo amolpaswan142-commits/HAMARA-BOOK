@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>HAMARA BOOK - आपकी अपनी डिजिटल लाइब्रेरी | Digital Library</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              400: '#34d399',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            },
+            darkbg: {
+              900: '#060a14',
+              800: '#0b1120',
+              700: '#0f172a',
+              600: '#1e293b',
+            }
+          }
+        }
+      }
+    }
+  </script>
+  <!-- Lucide Icons -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <!-- jsPDF CDN for Real PDF Downloads -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-[#070c18] text-slate-100 min-h-screen flex flex-col antialiased selection:bg-emerald-500 selection:text-black">
+
+  <!-- ======================================================== -->
+  <!-- 1. LOGIN / AUTHENTICATION VIEW (Visible before login)     -->
+  <!-- ======================================================== -->
+  <div id="auth-screen" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#050914] bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-emerald-950/40 via-[#070c18] to-[#04070f]">
+    <!-- Decorative background glow blobs -->
+    <div class="absolute -top-32 -left-32 w-96 h-96 bg-emerald-600/10 rounded-full blur-3xl pointer-events-none"></div>
+    <div class="absolute -bottom-32 -right-32 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+    <div class="w-full max-w-md glass-panel rounded-3xl p-8 shadow-2xl relative border border-slate-800/80 animate-fade-in">
+      <!-- Brand Logo Header -->
+      <div class="text-center mb-8">
+        <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 mb-4 shadow-lg shadow-emerald-900/30">
+          <i data-lucide="book-open-check" class="w-9 h-9"></i>
+        </div>
+        <h1 class="text-3xl font-extrabold tracking-tight text-white flex items-center justify-center gap-2">
+          <span>HAMARA</span>
+          <span class="text-emerald-400 text-glow">BOOK</span>
+        </h1>
+        <p class="text-emerald-400/90 text-sm font-medium mt-1">आपकी अपनी डिजिटल लाइब्रेरी</p>
+        <p class="text-slate-400 text-xs mt-1">Access School, University, Popular & IT Books</p>
+      </div>
+
+      <!-- Quick Demo Access Bar -->
+      <div class="mb-6 p-3 rounded-xl bg-emerald-950/40 border border-emerald-500/20 text-center">
+        <p class="text-xs text-emerald-300 font-medium mb-2">⚡ Quick 1-Click Instant Login (No typing needed):</p>
+        <div class="grid grid-cols-2 gap-2">
+          <button id="quick-demo-student-btn" class="py-2 px-3 text-xs font-semibold rounded-lg bg-emerald-500/20 hover:bg-emerald-500/30 text-emerald-300 border border-emerald-500/30 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="graduation-cap" class="w-3.5 h-3.5"></i> Student
+          </button>
+          <button id="quick-demo-it-btn" class="py-2 px-3 text-xs font-semibold rounded-lg bg-blue-500/20 hover:bg-blue-500/30 text-blue-300 border border-blue-500/30 transition flex items-center justify-center gap-1.5">
+            <i data-lucide="laptop" class="w-3.5 h-3.5"></i> IT Professional
+          </button>
+        </div>
+      </div>
+
+      <!-- Auth Form Tabs -->
+      <div class="flex border-b border-slate-800 mb-6 text-sm font-semibold">
+        <button id="tab-login" class="flex-1 pb-3 text-emerald-400 border-b-2 border-emerald-400 transition">Sign In</button>
+        <button id="tab-register" class="flex-1 pb-3 text-slate-400 hover:text-slate-200 transition">Create Account</button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="login-form" class="space-y-4">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Email or Student ID</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+              <i data-lucide="mail" class="w-4 h-4"></i>
+            </span>
+            <input type="text" id="login-email" value="reader@hamarabook.com" required placeholder="name@example.com" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+          </div>
+        </div>
+
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Password</label>
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+              <i data-lucide="lock" class="w-4 h-4"></i>
+            </span>
+            <input type="password" id="login-password" value="library123" required placeholder="••••••••" class="w-full pl-10 pr-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-100 placeholder-slate-500 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+          </div>
+        </div>
+
+        <div class="flex items-center justify-between text-xs text-slate-400 pt-1">
+          <label class="flex items-center gap-2 cursor-pointer select-none">
+            <input type="checkbox" checked class="rounded border-slate-700 text-emerald-500 focus:ring-emerald-500 bg-slate-900">
+            <span>Remember me</span>
+          </label>
+          <a href="#" class="text-emerald-400 hover:underline">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-lg shadow-emerald-900/40 transition-all flex items-center justify-center gap-2 group mt-2">
+          <span>Login to HAMARA BOOK</span>
+          <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition"></i>
+        </button>
+      </form>
+
+      <!-- Register Form (Hidden by default) -->
+      <form id="register-form" class="space-y-4 hidden">
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Full Name</label>
+          <input type="text" id="reg-name" placeholder="Aarav Sharma" class="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 transition">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Email Address</label>
+          <input type="email" id="reg-email" placeholder="aarav@example.com" class="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 transition">
+        </div>
+        <div>
+          <label class="block text-xs font-medium text-slate-300 mb-1.5">Create Password</label>
+          <input type="password" id="reg-password" placeholder="Create password" class="w-full px-4 py-2.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-100 text-sm focus:outline-none focus:border-emerald-500 transition">
+        </div>
+        <button type="submit" class="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-sm shadow-lg shadow-emerald-900/40 transition-all flex items-center justify-center gap-2">
+          <span>Complete Registration</span>
+        </button>
+      </form>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 2. MAIN APP VIEW (Displayed after Login)                  -->
+  <!-- ======================================================== -->
+  <div id="main-app" class="hidden flex-1 flex flex-col">
+    
+    <!-- Top Navigation Bar -->
+    <header class="sticky top-0 z-40 glass-nav">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+        <!-- Logo -->
+        <div class="flex items-center gap-3">
+          <div class="w-11 h-11 rounded-xl bg-emerald-500/15 border border-emerald-500/40 flex items-center justify-center text-emerald-400 shadow-md shadow-emerald-950">
+            <i data-lucide="book-open" class="w-6 h-6"></i>
+          </div>
+          <div>
+            <div class="text-xl sm:text-2xl font-black tracking-tight flex items-center gap-1.5">
+              <span class="text-white nav-brand-title">HAMARA</span>
+              <span class="text-emerald-400">BOOK</span>
+            </div>
+            <p class="text-[11px] text-emerald-400/80 -mt-1 hidden sm:block">आपकी अपनी डिजिटल लाइब्रेरी</p>
+          </div>
+        </div>
+
+        <!-- Portal View Switcher (Books vs Learn from Video) -->
+        <div class="hidden sm:flex items-center p-1 bg-slate-900/90 rounded-2xl border border-slate-700/60 shadow-inner">
+          <button id="nav-tab-books" class="nav-view-btn active flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold transition">
+            <i data-lucide="book-open" class="w-4 h-4"></i>
+            <span>Books Library</span>
+          </button>
+          <button id="nav-tab-videos" class="nav-view-btn flex items-center gap-2 px-3.5 py-2 rounded-xl text-xs font-bold text-slate-400 hover:text-white transition">
+            <i data-lucide="video" class="w-4 h-4 text-rose-400"></i>
+            <span>Learn from Video</span>
+            <span class="px-1.5 py-0.5 rounded-md bg-rose-500/20 text-rose-300 border border-rose-500/30 text-[10px] font-extrabold uppercase">New</span>
+          </button>
+        </div>
+
+        <!-- Global Search Bar -->
+        <div class="flex-1 max-w-sm hidden md:block">
+          <div class="relative">
+            <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 text-slate-400 pointer-events-none">
+              <i data-lucide="search" class="w-4 h-4"></i>
+            </span>
+            <input type="text" id="global-search-input" placeholder="Search by book title, author, video topic..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900/90 border border-slate-700/70 text-slate-200 placeholder-slate-400 text-sm focus:outline-none focus:border-emerald-500 focus:ring-1 focus:ring-emerald-500 transition">
+          </div>
+        </div>
+
+        <!-- User Controls -->
+        <div class="flex items-center gap-3">
+          <!-- Theme Toggle Button (Light/Dark Mode) -->
+          <button id="theme-toggle-btn" class="p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-emerald-400 transition" title="Toggle Light/Dark Theme">
+            <i id="theme-icon" data-lucide="sun" class="w-5 h-5"></i>
+          </button>
+
+          <!-- Bookmarks Button -->
+          <button id="open-bookmarks-btn" class="relative p-2.5 rounded-xl bg-slate-900/80 hover:bg-slate-800 border border-slate-700/60 text-slate-300 hover:text-emerald-400 transition" title="Saved Books">
+            <i data-lucide="bookmark" class="w-5 h-5"></i>
+            <span id="bookmarks-badge" class="absolute -top-1 -right-1 w-5 h-5 rounded-full bg-emerald-500 text-black text-xs font-bold flex items-center justify-center">0</span>
+          </button>
+
+          <!-- User Profile Pill -->
+          <div class="flex items-center gap-3 pl-2 border-l border-slate-800">
+            <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-emerald-600 to-teal-400 flex items-center justify-center text-slate-950 font-bold text-sm shadow-md" id="user-avatar-initials">
+              AS
+            </div>
+            <div class="hidden lg:block text-left">
+              <p class="text-xs font-semibold text-white leading-tight" id="user-display-name">Aarav Sharma</p>
+              <p class="text-[11px] text-emerald-400 font-medium" id="user-role-label">Premium Member</p>
+            </div>
+            <!-- Logout Button -->
+            <button id="logout-btn" class="ml-1 p-2 rounded-xl bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/30 text-xs font-medium flex items-center gap-1.5 transition" title="Log out">
+              <i data-lucide="log-out" class="w-4 h-4"></i>
+              <span class="hidden sm:inline">Logout</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      
+      <!-- Mobile Sub-Nav: View Switcher and Search Bar -->
+      <div class="px-4 pb-3 sm:hidden space-y-2">
+        <div class="flex items-center gap-2 p-1 bg-slate-900/90 rounded-xl border border-slate-700/60">
+          <button id="nav-tab-books-mobile" class="nav-view-btn active flex-1 py-1.5 text-xs font-bold rounded-lg text-center flex items-center justify-center gap-1.5">
+            <i data-lucide="book-open" class="w-3.5 h-3.5"></i> Books
+          </button>
+          <button id="nav-tab-videos-mobile" class="nav-view-btn flex-1 py-1.5 text-xs font-bold rounded-lg text-slate-400 hover:text-white text-center flex items-center justify-center gap-1.5">
+            <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i> Videos <span class="px-1 py-0.2 rounded bg-rose-500/20 text-rose-300 text-[9px] font-bold">NEW</span>
+          </button>
+        </div>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 flex items-center pl-3 text-slate-400">
+            <i data-lucide="search" class="w-4 h-4"></i>
+          </span>
+          <input type="text" id="mobile-search-input" placeholder="Search books or video topics..." class="w-full pl-10 pr-4 py-2 rounded-xl bg-slate-900 border border-slate-700 text-sm text-slate-200">
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+      <!-- ======================================================== -->
+      <!-- VIEW 1: BOOKS LIBRARY VIEW                               -->
+      <!-- ======================================================== -->
+      <div id="books-library-view" class="space-y-10">
+        <!-- EXACT PREFERENCE COMPONENT (Replicated from screenshot) -->
+        <section class="pref-section-container bg-[#090f1f] rounded-3xl p-5 sm:p-7 border border-slate-800/80 shadow-2xl relative overflow-hidden">
+          
+          <div class="flex flex-col xl:flex-row items-stretch gap-6">
+            
+            <!-- LEFT CARD: Green Curated Categorization Banner -->
+            <div class="curated-category-card rounded-2xl p-6 sm:p-7 flex flex-col justify-between text-white xl:w-[320px] shrink-0">
+              <div>
+                <p class="text-xs font-bold tracking-widest text-emerald-200/90 uppercase mb-2">
+                  CURATED CATEGORIZATION
+                </p>
+                <h2 class="text-2xl sm:text-3xl font-extrabold leading-tight tracking-tight uppercase mb-3">
+                  CHOOSE YOUR<br/>PREFERENCE
+                </h2>
+                <p class="text-emerald-100/80 text-xs sm:text-sm leading-relaxed mb-6">
+                  Filter library titles by educational grade & career level.
+                </p>
+              </div>
+              
+              <div>
+                <button id="btn-show-all-books" class="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-900/60 hover:bg-emerald-800/80 text-white text-xs font-semibold border border-emerald-400/30 transition shadow-sm hover:scale-[1.02] active:scale-95">
+                  <span class="text-sm">✕</span>
+                  <span>Show All Books</span>
+                </button>
+              </div>
+            </div>
+
+            <!-- RIGHT SECTION: The 4 Preference Category Cards -->
+            <div class="flex-1 grid grid-cols-2 sm:grid-cols-4 gap-3 sm:gap-4 items-center">
+              
+              <!-- Preference 1: School Education -->
+              <div data-category-id="school" class="pref-card active-preference cursor-pointer rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center">
+                <div class="relative mb-3">
+                  <img src="https://images.unsplash.com/photo-1544717305-2782549b5136?w=300&auto=format&fit=crop&q=80" alt="School Education" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover avatar-ring shadow-lg">
+                  <div class="check-badge">
+                    <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+                  </div>
+                </div>
+                <h3 class="pref-title text-base sm:text-lg font-bold text-white transition">School Education</h3>
+                <p class="text-xs text-slate-400 mt-1">Foundations & Basics</p>
+              </div>
+
+              <!-- Preference 2: Higher Education -->
+              <div data-category-id="higher" class="pref-card cursor-pointer rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center">
+                <div class="relative mb-3">
+                  <img src="https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=300&auto=format&fit=crop&q=80" alt="Higher Education" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover avatar-ring shadow-lg">
+                  <div class="check-badge">
+                    <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+                  </div>
+                </div>
+                <h3 class="pref-title text-base sm:text-lg font-bold text-white transition">Higher Education</h3>
+                <p class="text-xs text-slate-400 mt-1">University & Advanced</p>
+              </div>
+
+              <!-- Preference 3: Popular Book (Replaced Career Development) -->
+              <div data-category-id="popular" class="pref-card cursor-pointer rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center">
+                <div class="relative mb-3">
+                  <img src="assets/covers/good-girl-bad-blood.png" alt="Popular Book" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover avatar-ring shadow-lg">
+                  <div class="check-badge">
+                    <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+                  </div>
+                </div>
+                <h3 class="pref-title text-base sm:text-lg font-bold text-white transition">Popular Book</h3>
+                <p class="text-xs text-slate-400 mt-1">Trending & Popular</p>
+              </div>
+
+              <!-- Preference 4: IT Book (Replaced Research) -->
+              <div data-category-id="it" class="pref-card cursor-pointer rounded-2xl p-4 sm:p-5 flex flex-col items-center text-center">
+                <div class="relative mb-3">
+                  <img src="assets/covers/ai-generative-models.jpg" alt="IT Book" class="w-24 h-24 sm:w-28 sm:h-28 rounded-full object-cover avatar-ring shadow-lg">
+                  <div class="check-badge">
+                    <i data-lucide="check" class="w-4 h-4 stroke-[3]"></i>
+                  </div>
+                </div>
+                <h3 class="pref-title text-base sm:text-lg font-bold text-white transition">IT Book</h3>
+                <p class="text-xs text-slate-400 mt-1">Full-Stack, AI & Cloud</p>
+              </div>
+
+            </div>
+
+          </div>
+        </section>
+
+        <!-- CATALOG SECTION: Books Grid & Quick Filters -->
+        <section class="space-y-6">
+          <!-- Controls Bar -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <div>
+              <div class="flex items-center gap-2">
+                <h2 class="text-2xl font-bold text-white" id="section-heading">Books Collection</h2>
+                <span id="active-category-pill" class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-emerald-500/10 text-emerald-400 border border-emerald-500/30">
+                  School Education
+                </span>
+              </div>
+              <p class="text-xs text-slate-400 mt-1" id="section-subheading">Showing foundational textbooks and basics</p>
+            </div>
+
+            <!-- Sort and View Filter -->
+            <div class="flex items-center gap-3">
+              <span class="text-xs text-slate-400 font-medium">Sort by:</span>
+              <select id="sort-select" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-200 focus:outline-none focus:border-emerald-500">
+                <option value="featured">Featured & Newest</option>
+                <option value="newest">Newest First</option>
+                <option value="title">Alphabetical (A-Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Books Dynamic Grid -->
+          <div id="books-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <!-- Rendered via JavaScript -->
+          </div>
+
+          <!-- Empty State (if no books match search) -->
+          <div id="empty-state" class="hidden py-16 text-center space-y-3">
+            <div class="w-16 h-16 rounded-full bg-slate-800 mx-auto flex items-center justify-center text-slate-500">
+              <i data-lucide="book-x" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white">No books found</h3>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">No books match your current search query or filter. Try choosing another preference or click "Show All Books".</p>
+            <button id="reset-filter-btn" class="mt-2 px-4 py-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition">
+              Reset Filters
+            </button>
+          </div>
+        </section>
+      </div>
+
+      <!-- ======================================================== -->
+      <!-- VIEW 2: LEARN FROM VIDEO VIEW (Video Academy)            -->
+      <!-- ======================================================== -->
+      <div id="video-learning-view" class="hidden space-y-8 animate-fade-in">
+        
+        <!-- Video Hero Banner -->
+        <section class="video-hero-banner rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-2xl relative overflow-hidden bg-gradient-to-br from-[#0b1329] via-[#09152b] to-[#0c1020]">
+          <!-- Glow effects -->
+          <div class="absolute -top-24 -right-24 w-80 h-80 bg-rose-500/10 rounded-full blur-3xl pointer-events-none"></div>
+          <div class="absolute -bottom-24 -left-24 w-80 h-80 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+          <div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div class="max-w-2xl space-y-3">
+              <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs font-bold uppercase tracking-wider">
+                <i data-lucide="video" class="w-3.5 h-3.5 text-rose-400"></i>
+                <span>HAMARA BOOK Video Academy • वीडियो से सीखें</span>
+              </div>
+              <h2 class="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight leading-tight">
+                Learn Visually with <span class="bg-gradient-to-r from-rose-400 via-pink-400 to-amber-300 bg-clip-text text-transparent">Curated Video Masterclasses</span>
+              </h2>
+              <p class="text-sm sm:text-base text-slate-300 leading-relaxed">
+                Watch top full-course lessons covering <strong class="text-white">Full-Stack Web Dev, AI & Machine Learning, Data Structures, School Foundations</strong>, and <strong class="text-white">Financial Mindset</strong>. Each video includes interactive chapter navigation and direct links to our library companion books.
+              </p>
+              
+              <!-- Quick Stats Pills -->
+              <div class="flex flex-wrap items-center gap-3 pt-2 text-xs">
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-200">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-amber-400"></i>
+                  <span>12+ Masterclasses</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-200">
+                  <i data-lucide="layers" class="w-3.5 h-3.5 text-blue-400"></i>
+                  <span>Tech & Academic Masteries</span>
+                </div>
+                <div class="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-slate-900/80 border border-slate-700/70 text-slate-200">
+                  <i data-lucide="book-check" class="w-3.5 h-3.5 text-emerald-400"></i>
+                  <span>Linked to HAMARA BOOK Reader</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Video Quick Action -->
+            <div class="flex flex-col sm:flex-row md:flex-col gap-3 shrink-0">
+              <button id="featured-video-play-btn" class="px-5 py-3 rounded-2xl bg-gradient-to-r from-rose-600 to-pink-600 hover:from-rose-500 hover:to-pink-500 text-white font-bold text-sm shadow-xl shadow-rose-950 flex items-center justify-center gap-2.5 transition transform hover:scale-[1.02] active:scale-95">
+                <i data-lucide="play-circle" class="w-5 h-5 fill-white/20"></i>
+                <span>Watch Featured Course</span>
+              </button>
+              <button id="switch-back-to-books-btn" class="px-5 py-3 rounded-2xl bg-slate-900/80 hover:bg-slate-800 text-slate-300 hover:text-white font-semibold text-xs border border-slate-700/70 transition flex items-center justify-center gap-2">
+                <i data-lucide="book-open" class="w-4 h-4 text-emerald-400"></i>
+                <span>Browse Books Catalog</span>
+              </button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Video Category Filters & Search Controls -->
+        <section class="space-y-6">
+          <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-4 border-b border-slate-800">
+            <!-- Filter Pills -->
+            <div class="flex items-center gap-2 overflow-x-auto pb-2 lg:pb-0 scrollbar-none" id="video-category-filters">
+              <button data-video-category="all" class="video-filter-pill active-video-pill px-4 py-2 rounded-xl text-xs font-bold transition shrink-0 flex items-center gap-1.5">
+                <i data-lucide="grid" class="w-3.5 h-3.5"></i> All Videos (सभी वीडियो)
+              </button>
+              <button data-video-category="coding" class="video-filter-pill px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition shrink-0 flex items-center gap-1.5">
+                <i data-lucide="laptop" class="w-3.5 h-3.5 text-blue-400"></i> Coding & Full-Stack
+              </button>
+              <button data-video-category="ai" class="video-filter-pill px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition shrink-0 flex items-center gap-1.5">
+                <i data-lucide="cpu" class="w-3.5 h-3.5 text-purple-400"></i> AI & Python
+              </button>
+              <button data-video-category="school" class="video-filter-pill px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition shrink-0 flex items-center gap-1.5">
+                <i data-lucide="graduation-cap" class="w-3.5 h-3.5 text-emerald-400"></i> School & Science
+              </button>
+              <button data-video-category="finance" class="video-filter-pill px-4 py-2 rounded-xl text-xs font-bold text-slate-300 hover:text-white bg-slate-900 border border-slate-800 transition shrink-0 flex items-center gap-1.5">
+                <i data-lucide="trending-up" class="w-3.5 h-3.5 text-amber-400"></i> Mindset & Wealth
+              </button>
+            </div>
+
+            <!-- Video Sort & Counter -->
+            <div class="flex items-center gap-3 shrink-0">
+              <span id="video-count-badge" class="text-xs text-slate-400 font-medium">12 Videos Available</span>
+              <select id="video-sort-select" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-xs text-slate-200 focus:outline-none focus:border-rose-500">
+                <option value="featured">Featured Courses</option>
+                <option value="duration-desc">Longest Masterclasses</option>
+                <option value="duration-asc">Quick Lessons</option>
+                <option value="title">Alphabetical (A-Z)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Video Cards Grid -->
+          <div id="videos-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Rendered via JavaScript -->
+          </div>
+
+          <!-- Video Empty State -->
+          <div id="video-empty-state" class="hidden py-16 text-center space-y-3">
+            <div class="w-16 h-16 rounded-full bg-slate-800 mx-auto flex items-center justify-center text-slate-500">
+              <i data-lucide="video-off" class="w-8 h-8"></i>
+            </div>
+            <h3 class="text-lg font-bold text-white">No videos found</h3>
+            <p class="text-xs text-slate-400 max-w-sm mx-auto">No courses match your search or filter. Try choosing "All Videos" or clear your search.</p>
+            <button id="reset-video-filters-btn" class="mt-2 px-4 py-2 rounded-xl bg-rose-600 hover:bg-rose-500 text-xs font-semibold text-white transition">
+              Reset Video Filters
+            </button>
+          </div>
+        </section>
+
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-16 border-t border-slate-800/80 bg-[#050914] py-8 text-center text-xs text-slate-500">
+      <div class="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <div class="flex items-center gap-2">
+          <span class="font-bold text-white">HAMARA BOOK</span>
+          <span>•</span>
+          <span class="text-emerald-400">आपकी अपनी डिजिटल लाइब्रेरी</span>
+        </div>
+        <p>© 2026 HAMARA BOOK Digital Library Platform. All educational rights reserved.</p>
+        <div class="flex items-center gap-4 text-slate-400">
+          <a href="#" class="hover:text-emerald-400 transition">Terms</a>
+          <a href="#" class="hover:text-emerald-400 transition">Privacy</a>
+          <a href="#" class="hover:text-emerald-400 transition">Student Help</a>
+        </div>
+      </div>
+    </footer>
+
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 5. INTERACTIVE BOOK READER MODAL                          -->
+  <!-- ======================================================== -->
+  <div id="reader-modal" class="fixed inset-0 z-50 hidden reader-modal-bg flex items-center justify-center p-2 sm:p-6 animate-fade-in">
+    <div class="reader-box w-full max-w-4xl h-[90vh] rounded-3xl bg-[#0c1324] border border-slate-700 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Reader Header -->
+      <div class="reader-header px-6 py-4 border-b border-slate-800 flex items-center justify-between gap-4 bg-[#090f1d]">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
+            <i data-lucide="book-open" class="w-5 h-5"></i>
+          </div>
+          <div class="min-w-0">
+            <h3 id="reader-modal-title" class="text-base font-bold text-white truncate">Book Title</h3>
+            <p id="reader-modal-author" class="text-xs text-emerald-400 truncate">Author Name</p>
+          </div>
+        </div>
+
+        <!-- Reader Controls (Download, Font size, Close) -->
+        <div class="flex items-center gap-2 sm:gap-3">
+          <!-- Direct Download Book PDF button -->
+          <button id="reader-download-btn" class="px-3 py-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition flex items-center gap-1.5 shadow-md shadow-emerald-950">
+            <i data-lucide="download" class="w-3.5 h-3.5"></i>
+            <span class="hidden sm:inline">Download PDF</span>
+          </button>
+
+          <div class="flex items-center bg-slate-900 border border-slate-800 rounded-xl p-1 text-xs">
+            <button id="btn-font-dec" class="px-2 py-1 hover:text-emerald-400 transition" title="Decrease font size">A-</button>
+            <span class="text-slate-600 px-1">|</span>
+            <button id="btn-font-inc" class="px-2 py-1 hover:text-emerald-400 transition font-bold" title="Increase font size">A+</button>
+          </div>
+
+          <button id="close-reader-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition">
+            <i data-lucide="x" class="w-5 h-5"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Reader Chapter Selector Sub-header -->
+      <div class="reader-subheader px-6 py-2.5 border-b border-slate-800/80 bg-[#070c18] flex flex-wrap items-center justify-between gap-3 text-xs">
+        <div class="flex items-center gap-2">
+          <span class="text-slate-400 font-medium">Jump to Chapter:</span>
+          <select id="reader-chapter-select" class="px-3 py-1.5 rounded-xl bg-slate-900 border border-slate-700 text-slate-200 font-semibold focus:outline-none focus:border-emerald-500 transition">
+            <!-- 10 Chapters options populated dynamically -->
+          </select>
+        </div>
+        <div class="flex items-center gap-2">
+          <span id="reader-chapter-badge" class="px-3 py-1 rounded-lg bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-semibold text-xs truncate max-w-xs">
+            Chapter 1
+          </span>
+        </div>
+      </div>
+
+      <!-- Reader Body -->
+      <div id="reader-content-body" class="flex-1 overflow-y-auto p-6 sm:p-10 reader-font leading-relaxed transition-all">
+        <!-- Injected dynamically -->
+      </div>
+
+      <!-- Reader Footer / Page & Chapter Pagination -->
+      <div class="reader-footer px-6 py-3.5 border-t border-slate-800 bg-[#090f1d] flex items-center justify-between text-xs text-slate-300">
+        <div class="flex items-center gap-2">
+          <button id="reader-prev-chapter" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1 border border-slate-800" title="Previous Chapter">
+            <i data-lucide="chevrons-left" class="w-3.5 h-3.5"></i> <span class="hidden sm:inline">Prev Ch</span>
+          </button>
+          <button id="reader-prev-page" class="px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 transition flex items-center gap-1 border border-emerald-500/30 font-semibold">
+            <i data-lucide="chevron-left" class="w-4 h-4"></i> Prev Page
+          </button>
+        </div>
+
+        <div class="text-center">
+          <span id="reader-page-indicator" class="font-bold text-white text-sm">Page 1 of 4</span>
+          <p id="reader-meta-indicator" class="text-[11px] text-emerald-400 font-medium">Chapter 1 of 10</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button id="reader-next-page" class="px-3 py-1.5 rounded-lg bg-emerald-600 hover:bg-emerald-500 text-white transition flex items-center gap-1 font-semibold shadow-md shadow-emerald-950">
+            Next Page <i data-lucide="chevron-right" class="w-4 h-4"></i>
+          </button>
+          <button id="reader-next-chapter" class="px-3 py-1.5 rounded-lg bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-white transition flex items-center gap-1 border border-slate-800" title="Next Chapter">
+            <span class="hidden sm:inline">Next Ch</span> <i data-lucide="chevrons-right" class="w-3.5 h-3.5"></i>
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 6. SAVED BOOKMARKS MODAL                                  -->
+  <!-- ======================================================== -->
+  <div id="bookmarks-modal" class="fixed inset-0 z-50 hidden reader-modal-bg flex items-center justify-center p-4">
+    <div class="bookmarks-box w-full max-w-lg rounded-2xl bg-[#0c1324] border border-slate-700 shadow-2xl p-6 space-y-4">
+      <div class="flex items-center justify-between border-b border-slate-800 pb-3">
+        <div class="flex items-center gap-2">
+          <i data-lucide="bookmark" class="w-5 h-5 text-emerald-400"></i>
+          <h3 class="font-bold text-white text-lg">My Saved Books</h3>
+        </div>
+        <button id="close-bookmarks-btn" class="p-1 rounded-lg text-slate-400 hover:text-white">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+      <div id="bookmarks-list" class="max-h-96 overflow-y-auto space-y-3">
+        <!-- Bookmark items populated by JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- 7. INTERACTIVE VIDEO PLAYER MODAL                         -->
+  <!-- ======================================================== -->
+  <div id="video-player-modal" class="fixed inset-0 z-50 hidden reader-modal-bg flex items-center justify-center p-2 sm:p-6 animate-fade-in">
+    <div class="video-modal-box w-full max-w-5xl max-h-[92vh] rounded-3xl bg-[#090f1f] border border-slate-700 shadow-2xl flex flex-col overflow-hidden">
+      
+      <!-- Video Modal Header -->
+      <div class="video-modal-header px-6 py-4 border-b border-slate-800 flex items-center justify-between gap-4 bg-[#070c1a]">
+        <div class="flex items-center gap-3 min-w-0">
+          <div class="w-10 h-10 rounded-xl bg-rose-500/20 text-rose-400 flex items-center justify-center shrink-0">
+            <i data-lucide="video" class="w-5 h-5"></i>
+          </div>
+          <div class="min-w-0">
+            <div class="flex items-center gap-2">
+              <span id="video-modal-badge" class="px-2 py-0.5 rounded-md text-[10px] font-bold uppercase tracking-wider bg-rose-500/20 text-rose-300 border border-rose-500/30">Masterclass</span>
+              <span id="video-modal-duration" class="text-xs text-slate-400 font-medium">8h 24m</span>
+            </div>
+            <h3 id="video-modal-title" class="text-base sm:text-lg font-bold text-white truncate">Video Course Title</h3>
+          </div>
+        </div>
+
+        <button id="close-video-modal-btn" class="p-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-slate-400 hover:text-white border border-slate-800 transition" title="Close Video Player">
+          <i data-lucide="x" class="w-5 h-5"></i>
+        </button>
+      </div>
+
+      <!-- Video Modal Body -->
+      <div class="flex-1 overflow-y-auto p-4 sm:p-6 space-y-6">
+        
+        <!-- 16:9 Aspect Video Container -->
+        <div class="relative w-full aspect-video rounded-2xl overflow-hidden bg-black shadow-2xl border border-slate-800">
+          <iframe 
+            id="video-modal-iframe" 
+            src="" 
+            title="Video Course" 
+            class="w-full h-full border-0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            allowfullscreen>
+          </iframe>
+          <div id="video-iframe-fallback" class="hidden absolute inset-0 bg-slate-950 flex flex-col items-center justify-center p-6 text-center">
+            <i data-lucide="play-circle" class="w-16 h-16 text-rose-500 mb-3"></i>
+            <h4 class="text-lg font-bold text-white mb-1">Direct Video Stream</h4>
+            <p class="text-xs text-slate-400 mb-4 max-w-md">If the embed player does not load in your local network, click below to open the lesson directly on YouTube.</p>
+            <a id="video-modal-direct-link" href="#" target="_blank" rel="noopener noreferrer" class="px-5 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-500 text-white font-semibold text-xs transition flex items-center gap-2">
+              <span>Open Video in New Tab</span>
+              <i data-lucide="external-link" class="w-3.5 h-3.5"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Course Details and Companion Book Link Bar -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- Left 2 Cols: Description & Chapters -->
+          <div class="lg:col-span-2 space-y-4">
+            <div>
+              <div class="flex items-center gap-2 mb-1.5">
+                <span id="video-modal-channel" class="text-xs font-bold text-rose-400">Instructor / Channel</span>
+                <span class="text-slate-600">•</span>
+                <span id="video-modal-category-text" class="text-xs text-slate-400">Coding & Full-Stack</span>
+              </div>
+              <p id="video-modal-description" class="text-sm text-slate-300 leading-relaxed">
+                Comprehensive walkthrough of the modern stack with real world projects and code samples.
+              </p>
+            </div>
+
+            <!-- Tags -->
+            <div id="video-modal-tags" class="flex flex-wrap gap-2">
+              <!-- Rendered via JS -->
+            </div>
+
+            <!-- Interactive Chapters Section -->
+            <div class="pt-2">
+              <h4 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 flex items-center gap-1.5">
+                <i data-lucide="list-video" class="w-3.5 h-3.5 text-rose-400"></i>
+                <span>Lesson Chapters & Outline</span>
+              </h4>
+              <div id="video-modal-chapters-list" class="grid grid-cols-1 sm:grid-cols-2 gap-2 max-h-48 overflow-y-auto pr-1">
+                <!-- Rendered dynamically -->
+              </div>
+            </div>
+          </div>
+
+          <!-- Right 1 Col: Companion Library Book Card -->
+          <div class="space-y-4">
+            <div class="p-5 rounded-2xl bg-[#0e162a] border border-slate-700/80 shadow-lg space-y-3" id="video-companion-book-card">
+              <div class="flex items-center gap-1.5 text-emerald-400 text-xs font-bold uppercase tracking-wider">
+                <i data-lucide="book-open-check" class="w-4 h-4"></i>
+                <span>Companion Library Book</span>
+              </div>
+              <div class="flex items-start gap-3">
+                <img id="video-companion-book-cover" src="assets/covers/fullstack-mern-nextjs.jpg" alt="Companion Book" class="w-14 h-20 rounded-lg object-cover border border-slate-700 shadow shrink-0">
+                <div class="min-w-0">
+                  <h5 id="video-companion-book-title" class="text-xs font-bold text-white leading-snug line-clamp-2">Full-Stack Web Development</h5>
+                  <p id="video-companion-book-author" class="text-[11px] text-slate-400 truncate mt-0.5">Alex Rivers</p>
+                  <span class="inline-block mt-2 px-2 py-0.5 rounded text-[10px] font-semibold bg-emerald-500/15 text-emerald-300 border border-emerald-500/30">
+                    10 Chapters Included
+                  </span>
+                </div>
+              </div>
+              <p class="text-[11px] text-slate-400">
+                Reinforce this video lesson by reading the official textbook chapters with our interactive reader.
+              </p>
+              <button id="video-open-companion-book-btn" class="w-full py-2 px-3 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-semibold text-xs transition flex items-center justify-center gap-2 shadow-md shadow-emerald-950">
+                <i data-lucide="book-open" class="w-3.5 h-3.5"></i>
+                <span>Read Companion Book</span>
+              </button>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="books-data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,573 @@
+/* HAMARA BOOK - Custom Styles & Light/Dark Themes */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Outfit:wght@400;600;700;800&family=Merriweather:ital,wght@0,300;0,400;0,700;1,300&display=swap');
+
+:root {
+  --bg-primary: #070c18;
+  --bg-secondary: #0d1527;
+  --bg-card: #0e1628;
+  --card-border: rgba(30, 41, 59, 0.8);
+  --brand-green: #10b981;
+  --brand-green-hover: #059669;
+  --hero-green-card: #136d3f;
+  --hero-green-border: #15803d;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --nav-bg: rgba(7, 12, 24, 0.85);
+  --nav-border: rgba(255, 255, 255, 0.07);
+}
+
+html.light {
+  --bg-primary: #f1f5f9;
+  --bg-secondary: #ffffff;
+  --bg-card: #ffffff;
+  --card-border: #e2e8f0;
+  --brand-green: #059669;
+  --brand-green-hover: #047857;
+  --text-main: #0f172a;
+  --text-muted: #64748b;
+  --nav-bg: rgba(255, 255, 255, 0.92);
+  --nav-border: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+h1, h2, h3, .font-heading {
+  font-family: 'Outfit', sans-serif;
+}
+
+.reader-font {
+  font-family: 'Merriweather', serif;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #0b1120;
+}
+::-webkit-scrollbar-thumb {
+  background: #243553;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #334a73;
+}
+
+html.light ::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+}
+html.light ::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* Reference Image Styles: Left Green Card */
+.curated-category-card {
+  background: linear-gradient(145deg, #137443 0%, #0d5c34 100%);
+  border: 1px solid rgba(52, 211, 153, 0.25);
+  box-shadow: 0 10px 30px -5px rgba(16, 185, 129, 0.25);
+}
+
+/* Category item card */
+.pref-card {
+  transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 2px solid transparent;
+  background-color: transparent;
+}
+
+.pref-card:hover {
+  transform: translateY(-3px);
+}
+
+/* Active Category Card - Replicating the School Education Highlight */
+.pref-card.active-preference {
+  border-color: #10b981 !important;
+  background-color: rgba(16, 185, 129, 0.08);
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.25), inset 0 0 15px rgba(16, 185, 129, 0.05);
+}
+
+.pref-card.active-preference .pref-title {
+  color: #10b981 !important;
+}
+
+.pref-card.active-preference .check-badge {
+  display: flex !important;
+}
+
+/* Circular Avatar Frame */
+.avatar-ring {
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  transition: all 0.25s ease;
+}
+
+.pref-card.active-preference .avatar-ring {
+  border-color: #10b981;
+}
+
+.pref-card:hover .avatar-ring {
+  border-color: rgba(16, 185, 129, 0.6);
+}
+
+/* Glassmorphism surfaces */
+.glass-panel {
+  background: rgba(17, 27, 51, 0.75);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.glass-nav {
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--nav-border);
+  transition: background-color 0.25s ease, border-color 0.25s ease;
+}
+
+/* Animated book card hover */
+.book-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+.book-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px -10px rgba(0, 0, 0, 0.35), 0 0 20px rgba(16, 185, 129, 0.15);
+}
+
+/* Glowing text */
+.text-glow {
+  text-shadow: 0 0 15px rgba(16, 185, 129, 0.4);
+}
+
+/* Custom Checkmark Badge */
+.check-badge {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  background-color: #10b981;
+  color: #070c18;
+  border: 2px solid #070c18;
+  width: 26px;
+  height: 26px;
+  border-radius: 9999px;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.5);
+}
+
+/* Reader Modal Styles */
+.reader-modal-bg {
+  background: rgba(4, 8, 18, 0.88);
+  backdrop-filter: blur(10px);
+}
+
+html.light .reader-modal-bg {
+  background: rgba(15, 23, 42, 0.6);
+}
+
+/* ======================================================== */
+/* LIGHT THEME SPECIFIC STYLES OVERRIDES                     */
+/* ======================================================== */
+html.light {
+  color-scheme: light;
+}
+
+html.light body {
+  background-color: #f8fafc;
+  color: #0f172a;
+}
+
+html.light #auth-screen {
+  background: #f1f5f9;
+}
+
+html.light #auth-screen .glass-panel {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  box-shadow: 0 20px 35px -10px rgba(0, 0, 0, 0.08);
+}
+
+html.light #auth-screen h1 .text-white {
+  color: #0f172a !important;
+}
+
+html.light section.pref-section-container {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.05);
+}
+
+html.light .pref-card .pref-title {
+  color: #1e293b;
+}
+
+html.light .pref-card .avatar-ring {
+  border-color: #e2e8f0;
+}
+
+html.light .pref-card:hover {
+  background-color: #f8fafc;
+}
+
+html.light .pref-card.active-preference {
+  background-color: rgba(16, 185, 129, 0.08);
+  border-color: #10b981 !important;
+}
+
+html.light .nav-brand-title {
+  color: #0f172a !important;
+}
+
+html.light #global-search-input,
+html.light #mobile-search-input,
+html.light #sort-select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #global-search-input::placeholder,
+html.light #mobile-search-input::placeholder {
+  color: #94a3b8;
+}
+
+html.light #open-bookmarks-btn,
+html.light #theme-toggle-btn {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+html.light #open-bookmarks-btn:hover,
+html.light #theme-toggle-btn:hover {
+  color: #059669 !important;
+  border-color: #10b981 !important;
+}
+
+html.light #user-display-name {
+  color: #0f172a !important;
+}
+
+html.light #section-heading {
+  color: #0f172a !important;
+}
+
+html.light .book-card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 15px -3px rgba(0, 0, 0, 0.05);
+}
+
+html.light .book-card:hover {
+  border-color: #10b981 !important;
+  box-shadow: 0 12px 25px -5px rgba(16, 185, 129, 0.15), 0 4px 12px rgba(0, 0, 0, 0.05);
+}
+
+html.light .book-card h4 {
+  color: #0f172a !important;
+}
+
+html.light .book-card p.book-desc {
+  color: #64748b !important;
+}
+
+html.light .book-card-footer {
+  border-top-color: #f1f5f9 !important;
+}
+
+html.light .book-card-download-btn {
+  background-color: #f1f5f9 !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+
+html.light .book-card-download-btn:hover {
+  background-color: #e2e8f0 !important;
+  color: #059669 !important;
+}
+
+/* Light Mode Reader Modal */
+html.light #reader-modal .reader-box {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+}
+
+html.light #reader-modal .reader-header {
+  background-color: #f8fafc !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light #reader-modal-title {
+  color: #0f172a !important;
+}
+
+html.light #reader-modal .reader-subheader {
+  background-color: #f1f5f9 !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+
+html.light #reader-modal .reader-subheader select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #0f172a !important;
+}
+
+html.light #reader-content-body {
+  background-color: #ffffff !important;
+  color: #1e293b !important;
+}
+
+html.light #reader-content-body h2 {
+  color: #0f172a !important;
+}
+
+html.light #reader-modal .reader-footer {
+  background-color: #f8fafc !important;
+  border-top-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+
+html.light #reader-page-indicator {
+  color: #0f172a !important;
+}
+
+html.light #reader-prev-chapter,
+html.light #reader-next-chapter {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+
+/* Light Mode Bookmarks Modal */
+html.light #bookmarks-modal .bookmarks-box {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #0f172a !important;
+}
+
+html.light #bookmarks-modal h3 {
+  color: #0f172a !important;
+}
+
+html.light #bookmarks-modal .bookmark-item {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+
+html.light #bookmarks-modal .bookmark-item p.book-item-title {
+  color: #0f172a !important;
+}
+
+/* Light Mode Footer */
+html.light footer {
+  background-color: #ffffff !important;
+  border-top-color: #e2e8f0 !important;
+  color: #64748b !important;
+}
+
+html.light footer .footer-brand {
+  color: #0f172a !important;
+}
+
+/* Animation utilities */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.35s ease-out forwards;
+}
+
+/* Pulsing Badge */
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.9; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.05); }
+}
+.pulse-glow {
+  animation: pulseGlow 2.5s infinite;
+}
+
+/* ======================================================== */
+/* 8. VIDEO PORTAL & VIEW SWITCHER STYLES                   */
+/* ======================================================== */
+
+/* Navigation View Switcher (Books vs Videos) */
+.nav-view-btn {
+  background: transparent;
+  color: var(--text-muted);
+  border: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+.nav-view-btn:hover {
+  color: var(--text-main);
+  background: rgba(255, 255, 255, 0.05);
+}
+.nav-view-btn.active {
+  background: #10b981;
+  color: #022c22 !important;
+  font-weight: 700;
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.35);
+}
+.nav-view-btn.active.video-active {
+  background: linear-gradient(135deg, #f43f5e, #e11d48) !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.4);
+}
+
+html.light .nav-view-btn {
+  color: #64748b;
+}
+html.light .nav-view-btn:hover {
+  color: #0f172a;
+  background: #e2e8f0;
+}
+html.light .nav-view-btn.active {
+  background: #059669;
+  color: #ffffff !important;
+}
+html.light .nav-view-btn.active.video-active {
+  background: linear-gradient(135deg, #e11d48, #be123c) !important;
+  color: #ffffff !important;
+}
+
+/* Video Filter Pills */
+.video-filter-pill {
+  transition: all 0.2s ease;
+}
+.video-filter-pill.active-video-pill {
+  background: #f43f5e !important;
+  color: #ffffff !important;
+  border-color: #f43f5e !important;
+  box-shadow: 0 4px 14px rgba(244, 63, 94, 0.35);
+}
+
+/* Video Card Styling */
+.video-card {
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+.video-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 16px 32px -10px rgba(0, 0, 0, 0.45), 0 0 25px rgba(244, 63, 94, 0.18);
+  border-color: rgba(244, 63, 94, 0.5) !important;
+}
+.video-card .play-btn-overlay {
+  transition: transform 0.25s ease, background-color 0.25s ease, box-shadow 0.25s ease;
+}
+.video-card:hover .play-btn-overlay {
+  transform: scale(1.15);
+  background-color: #f43f5e;
+  box-shadow: 0 0 20px rgba(244, 63, 94, 0.6);
+}
+
+/* Light Theme for Video Portal */
+html.light .video-hero-banner {
+  background: linear-gradient(135deg, #ffffff 0%, #fff1f2 50%, #ffe4e6 100%) !important;
+  border-color: #fecdd3 !important;
+  box-shadow: 0 10px 25px -5px rgba(244, 63, 94, 0.08);
+}
+html.light .video-hero-banner h2 {
+  color: #1e293b !important;
+}
+html.light .video-hero-banner p {
+  color: #475569 !important;
+}
+html.light .video-hero-banner strong {
+  color: #0f172a !important;
+}
+html.light .video-hero-banner .bg-slate-900\/80 {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+html.light #switch-back-to-books-btn {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #334155 !important;
+}
+html.light #switch-back-to-books-btn:hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+html.light .video-filter-pill:not(.active-video-pill) {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  color: #475569 !important;
+}
+html.light .video-filter-pill:not(.active-video-pill):hover {
+  background-color: #f8fafc !important;
+  color: #0f172a !important;
+}
+html.light .video-card {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+html.light .video-card:hover {
+  box-shadow: 0 16px 30px -10px rgba(244, 63, 94, 0.15), 0 0 15px rgba(244, 63, 94, 0.1);
+  border-color: #fda4af !important;
+}
+html.light .video-card h4 {
+  color: #0f172a !important;
+}
+html.light .video-card p {
+  color: #64748b !important;
+}
+html.light .video-card .video-meta-bar {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #video-sort-select {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #1e293b !important;
+}
+html.light .video-modal-box {
+  background-color: #ffffff !important;
+  border-color: #e2e8f0 !important;
+}
+html.light .video-modal-header {
+  background-color: #f8fafc !important;
+  border-bottom-color: #e2e8f0 !important;
+}
+html.light .video-modal-header h3 {
+  color: #0f172a !important;
+}
+html.light #close-video-modal-btn {
+  background-color: #ffffff !important;
+  border-color: #cbd5e1 !important;
+  color: #475569 !important;
+}
+html.light #video-companion-book-card {
+  background-color: #f8fafc !important;
+  border-color: #e2e8f0 !important;
+}
+html.light #video-companion-book-card h5 {
+  color: #0f172a !important;
+}
+html.light .video-chapter-pill {
+  background-color: #f1f5f9 !important;
+  border-color: #e2e8f0 !important;
+  color: #334155 !important;
+}
+html.light .video-chapter-pill:hover {
+  background-color: #ffe4e6 !important;
+  color: #e11d48 !important;
+}
