@@ -12,7 +12,7 @@ const bookMeta = [
     pages: 380,
     year: 2022,
     badge: '#1 TikTok & Global Sensation',
-    cover: 'i-fell-in-love-with-hope.png',
+    cover: 'assets/covers/i-fell-in-love-with-hope.png',
     description: 'A breathtaking story of a group of terminally ill patients in a hospital who choose to live fiercely, embracing hope, rebellion, and deep unconditional love.',
     chapterTitles: [
       'The Sterile Sanctuary',
@@ -36,7 +36,7 @@ const bookMeta = [
     pages: 416,
     year: 2020,
     badge: 'NYT Bestselling Mystery',
-    cover: 'good-girl-bad-blood.png',
+    cover: 'assets/covers/good-girl-bad-blood.png',
     description: 'Pip Fitz-Amobi is determined to leave detective work behind after her true-crime podcast goes viral, until an urgent disappearance forces her back into the dark underbelly of Little Kilton.',
     chapterTitles: [
       'The Memorial and the Microphone',
@@ -60,7 +60,7 @@ const bookMeta = [
     pages: 256,
     year: 2020,
     badge: 'International Bestseller',
-    cover: 'the-psychology-of-money.png',
+    cover: 'assets/covers/the-psychology-of-money.png',
     description: 'Timeless lessons on wealth, greed, and happiness exploring how people make financial choices driven by emotions, ego, and personal history rather than pure mathematics.',
     chapterTitles: [
       'No One is Crazy',
@@ -84,7 +84,7 @@ const bookMeta = [
     pages: 384,
     year: 2021,
     badge: 'New York Times Bestseller',
-    cover: 'the-love-hypothesis.png',
+    cover: 'assets/covers/the-love-hypothesis.png',
     description: "A STEMinist rom-com about Ph.D. candidate Olive Smith who panics and kisses the first man she sees—who turns out to be Dr. Adam Carlsen, the department's most dreaded professor.",
     chapterTitles: [
       'The Hallway Emergency Protocol',
@@ -459,7 +459,7 @@ const PREFERENCE_CATEGORIES = [
     id: 'popular',
     title: 'Popular Book',
     subtitle: 'Trending & Popular',
-    image: 'good-girl-bad-blood.png',
+    image: 'assets/covers/good-girl-bad-blood.png',
     description: 'World bestsellers, thriller, romance, finance & mindset'
   },
   {

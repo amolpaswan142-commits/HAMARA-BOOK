@@ -30,9 +30,40 @@ document.addEventListener('DOMContentLoaded', () => {
     };
   }
 
+  function getBookChapterTopics(title) {
+    const subject = title.replace(/\s*\([^)]*\)/g, '').trim();
+    return [
+      `${subject}: Scope and Foundations`,
+      `${subject}: Key Terms and Core Principles`,
+      `${subject}: Essential Methods and Models`,
+      `${subject}: Practical Examples and Applications`,
+      `${subject}: Analysis, Practice and Problem Solving`,
+      `${subject}: Tools, Techniques and Case Studies`,
+      `${subject}: Advanced Topics and New Perspectives`,
+      `${subject}: Common Questions and Mistakes`,
+      `${subject}: Revision Guide and Learning Activities`,
+      `${subject}: Assessment and Further Reading`
+    ];
+  }
+
+  function createStoryBook(book, chapters) {
+    return {
+      ...book,
+      chapters: chapters.map((chapter, index) => ({
+        chapterNumber: index + 1,
+        title: `Chapter ${index + 1}: ${chapter.title}`,
+        pages: [
+          `Chapter ${index + 1}: ${chapter.title}\n\n${chapter.summary}\n\nThis chapter follows the characters, choices, and turning points that shape ${book.title}.`,
+          `The story continues in ${book.title}\n\n${chapter.detail}\n\nNotice how the setting and the characters' decisions deepen the central conflict and move the narrative forward.`,
+          `Story Reflection\n\n${chapter.reflection}\n\nKeep this moment in mind as the next chapter reveals another consequence of the journey.`
+        ]
+      }))
+    };
+  }
+
   const additionalBooks = [
-    createAdditionalBook({ id: 'sch-5', title: 'Complete Biology for School Students', author: 'Dr. Meera Kapoor', category: 'school', categoryName: 'School Education', pages: 340, year: 2025, badge: 'Biology Basics', cover: 'complete-biology.jpg', description: 'A clear introduction to cells, life processes, ecology, genetics, and human biology for school learners.' }, ['Cell Structure and Organization', 'Biomolecules and Enzymes', 'Plant Nutrition and Photosynthesis', 'Human Digestion and Respiration', 'Circulation and Excretion', 'Nervous System and Coordination', 'Reproduction and Development', 'Heredity and Evolution', 'Ecology and Food Chains', 'Health, Disease and Environment']),
-    createAdditionalBook({ id: 'sch-6', title: 'Essential Physics: Motion, Energy & Waves', author: 'R. K. Iyer', category: 'school', categoryName: 'School Education', pages: 320, year: 2025, badge: 'Physics Foundation', cover: 'essential-physics.jpg', description: 'Build confidence in school physics with intuitive explanations of motion, force, energy, electricity, and waves.' }, ['Units, Measurements and Vectors', 'Motion in One and Two Dimensions', 'Force, Laws of Motion and Friction', 'Work, Energy and Power', 'Gravitation and Satellites', 'Properties of Matter and Fluids', 'Heat, Temperature and Thermodynamics', 'Sound and Mechanical Waves', 'Light, Reflection and Refraction', 'Electricity and Magnetism']),
+    createAdditionalBook({ id: 'sch-5', title: 'Complete Biology for School Students', author: 'Dr. Meera Kapoor', category: 'school', categoryName: 'School Education', pages: 340, year: 2025, badge: 'Biology Basics', cover: 'assets/covers/complete-biology.jpg', description: 'A clear introduction to cells, life processes, ecology, genetics, and human biology for school learners.' }, ['Cell Structure and Organization', 'Biomolecules and Enzymes', 'Plant Nutrition and Photosynthesis', 'Human Digestion and Respiration', 'Circulation and Excretion', 'Nervous System and Coordination', 'Reproduction and Development', 'Heredity and Evolution', 'Ecology and Food Chains', 'Health, Disease and Environment']),
+    createAdditionalBook({ id: 'sch-6', title: 'Essential Physics: Motion, Energy & Waves', author: 'R. K. Iyer', category: 'school', categoryName: 'School Education', pages: 320, year: 2025, badge: 'Physics Foundation', cover: 'assets/covers/essential-physics.jpg', description: 'Build confidence in school physics with intuitive explanations of motion, force, energy, electricity, and waves.' }, ['Units, Measurements and Vectors', 'Motion in One and Two Dimensions', 'Force, Laws of Motion and Friction', 'Work, Energy and Power', 'Gravitation and Satellites', 'Properties of Matter and Fluids', 'Heat, Temperature and Thermodynamics', 'Sound and Mechanical Waves', 'Light, Reflection and Refraction', 'Electricity and Magnetism']),
     createAdditionalBook({ id: 'sch-7', title: 'Geography and Environmental Studies', author: 'Sonal Malhotra', category: 'school', categoryName: 'School Education', pages: 300, year: 2024, badge: 'Earth & Society', cover: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80', description: 'Explore maps, climate, natural resources, populations, and sustainable development through accessible lessons.' }, ['Maps, Globes and Geographic Skills', 'Earth Movements and Landforms', 'Atmosphere, Weather and Climate', 'Rivers, Oceans and Water Cycles', 'Soils, Forests and Biodiversity', 'Minerals, Energy and Resources', 'Agriculture and Food Systems', 'Industries, Transport and Trade', 'Population, Settlements and Migration', 'Sustainability and Climate Action']),
     createAdditionalBook({ id: 'hi-5', title: 'Research Methods for University Students', author: 'Dr. Kavita Nair', category: 'higher', categoryName: 'Higher Education', pages: 430, year: 2025, badge: 'Academic Research', cover: 'https://images.unsplash.com/photo-1521737711867-e3b97375f902?w=600&auto=format&fit=crop&q=80', description: 'Learn how to frame research questions, evaluate evidence, collect data, and present rigorous academic work.' }, ['Choosing a Research Problem', 'Literature Reviews and Scholarly Sources', 'Research Questions and Hypotheses', 'Qualitative Research Designs', 'Quantitative Research Designs', 'Sampling and Participant Selection', 'Surveys, Interviews and Experiments', 'Data Analysis and Interpretation', 'Academic Writing and Citations', 'Ethics, Presentations and Publication']),
     createAdditionalBook({ id: 'hi-6', title: 'Principles of Organic Chemistry', author: 'Prof. Arvind Menon', category: 'higher', categoryName: 'Higher Education', pages: 590, year: 2024, badge: 'Chemistry Core', cover: 'https://images.unsplash.com/photo-1603126857599-f6e157fa2fe6?w=600&auto=format&fit=crop&q=80', description: 'A structured university-level guide to bonding, reactions, stereochemistry, synthesis, and spectroscopy.' }, ['Atomic Bonding and Molecular Structure', 'Functional Groups and Nomenclature', 'Stereochemistry and Isomerism', 'Reaction Mechanisms and Energy', 'Alkanes, Alkenes and Alkynes', 'Aromatic Compounds and Substitution', 'Carbonyl Chemistry and Carboxylic Acids', 'Amines, Amino Acids and Polymers', 'Spectroscopy and Structure Determination', 'Retrosynthesis and Modern Synthesis']),
@@ -40,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
     createAdditionalBook({ id: 'pop-5', title: 'Atomic Habits', author: 'James Clear', category: 'popular', categoryName: 'Popular Book', pages: 320, year: 2018, badge: 'Personal Growth Bestseller', cover: 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=600&auto=format&fit=crop&q=80', description: 'Practical ideas for building better habits, breaking unhelpful routines, and improving a little every day.' }, ['The Surprising Power of Tiny Changes', 'How Habits Shape Identity', 'The Four Laws of Behavior Change', 'Make It Obvious', 'Make It Attractive', 'Make It Easy', 'Make It Satisfying', 'Advanced Habit Strategies', 'How to Stay Motivated', 'The Truth About Lasting Change']),
     createAdditionalBook({ id: 'pop-6', title: 'The Alchemist', author: 'Paulo Coelho', category: 'popular', categoryName: 'Popular Book', pages: 208, year: 1988, badge: 'Global Fiction Classic', cover: 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&auto=format&fit=crop&q=80', description: 'A timeless journey about dreams, courage, self-discovery, and listening to the call of one’s heart.' }, ['The Shepherd and the Dream', 'The Gypsy and the Great Pyramids', 'Meeting the King of Salem', 'The Journey Across the Desert', 'The Crystal Merchant', 'Learning the Language of the World', 'The Englishman and the Search', 'The Alchemist’s Lessons', 'The Soul of the World', 'Finding the Treasure Within']),
     createAdditionalBook({ id: 'pop-7', title: 'Ikigai: The Japanese Secret to a Long and Happy Life', author: 'Héctor García and Francesc Miralles', category: 'popular', categoryName: 'Popular Book', pages: 208, year: 2016, badge: 'Wellness Bestseller', cover: 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&auto=format&fit=crop&q=80', description: 'Discover thoughtful principles for purpose, wellbeing, community, and a more balanced daily life.' }, ['The Meaning of Ikigai', 'The Secrets of the Centenarians', 'Flow and Everyday Purpose', 'Food, Movement and Longevity', 'Gentle Exercise for Life', 'Resilience and Emotional Balance', 'Finding Purpose in Work', 'Community and Connection', 'Simple Rituals for Daily Life', 'Building Your Personal Ikigai']),
-    createAdditionalBook({ id: 'it-5', title: 'Cybersecurity Fundamentals and Ethical Hacking', author: 'Vikram Sethi', category: 'it', categoryName: 'IT Book', pages: 520, year: 2025, badge: 'Security Essential', cover: 'cybersecurity-fundamentals.jpg', description: 'Understand networks, vulnerabilities, secure coding, threat modeling, and responsible security testing.' }, ['Security Mindset and Threat Models', 'Networking and Internet Protocols', 'Linux, Shells and System Hardening', 'Cryptography and Key Management', 'Web Application Security', 'Identity, Access and Authentication', 'Vulnerability Assessment and Testing', 'Security Monitoring and Incident Response', 'Cloud and Container Security', 'Ethics, Governance and Risk']),
-    createAdditionalBook({ id: 'it-6', title: 'Data Structures and Algorithms in Practice', author: 'Arjun Rao', category: 'it', categoryName: 'IT Book', pages: 560, year: 2025, badge: 'Interview Preparation', cover: 'data-structures-algorithms.jpg', description: 'Master the core data structures, algorithms, complexity analysis, and problem-solving patterns used in software engineering.' }, ['Complexity Analysis and Problem Solving', 'Arrays, Strings and Hash Tables', 'Linked Lists, Stacks and Queues', 'Trees, Heaps and Priority Queues', 'Graphs and Traversal Algorithms', 'Sorting and Searching Techniques', 'Recursion and Backtracking', 'Greedy Algorithms and Dynamic Programming', 'Advanced Graph and String Problems', 'Designing Solutions for Interviews'])
+    createAdditionalBook({ id: 'it-5', title: 'Cybersecurity Fundamentals and Ethical Hacking', author: 'Vikram Sethi', category: 'it', categoryName: 'IT Book', pages: 520, year: 2025, badge: 'Security Essential', cover: 'assets/covers/cybersecurity-fundamentals.jpg', description: 'Understand networks, vulnerabilities, secure coding, threat modeling, and responsible security testing.' }, ['Security Mindset and Threat Models', 'Networking and Internet Protocols', 'Linux, Shells and System Hardening', 'Cryptography and Key Management', 'Web Application Security', 'Identity, Access and Authentication', 'Vulnerability Assessment and Testing', 'Security Monitoring and Incident Response', 'Cloud and Container Security', 'Ethics, Governance and Risk']),
+    createAdditionalBook({ id: 'it-6', title: 'Data Structures and Algorithms in Practice', author: 'Arjun Rao', category: 'it', categoryName: 'IT Book', pages: 560, year: 2025, badge: 'Interview Preparation', cover: 'assets/covers/data-structures-algorithms.jpg', description: 'Master the core data structures, algorithms, complexity analysis, and problem-solving patterns used in software engineering.' }, ['Complexity Analysis and Problem Solving', 'Arrays, Strings and Hash Tables', 'Linked Lists, Stacks and Queues', 'Trees, Heaps and Priority Queues', 'Graphs and Traversal Algorithms', 'Sorting and Searching Techniques', 'Recursion and Backtracking', 'Greedy Algorithms and Dynamic Programming', 'Advanced Graph and String Problems', 'Designing Solutions for Interviews'])
   ];
 
   function createDetailedBook(category, categoryName, id, title, author, badge, cover, description) {
@@ -56,30 +87,19 @@ document.addEventListener('DOMContentLoaded', () => {
       badge,
       cover,
       description
-    }, [
-      'Core Concepts and Foundations',
-      'Key Terms and Important Ideas',
-      'Methods, Models and Examples',
-      'Practical Applications and Skills',
-      'Analysis, Practice and Problem Solving',
-      'Tools, Techniques and Case Studies',
-      'Advanced Topics and New Perspectives',
-      'Common Questions and Mistakes',
-      'Revision Guide and Learning Activities',
-      'Summary, Assessment and Further Reading'
-    ]);
+    }, getBookChapterTopics(title));
   }
 
   const categoryExpansion = [
     // School Books - Real Matching Covers including 8 user covers
-    createDetailedBook('school', 'School Education', 'school-8', 'हिंदी भाषा और साहित्य (Hindi Literature)', 'Asha Tiwari', 'हिंदी साहित्य', 'hindi-literature.jpg', 'हिंदी भाषा, व्याकरण और आधुनिक एवं प्राचीन गद्य-पद्य साहित्य का संपूर्ण अध्ययन।'),
-    createDetailedBook('school', 'School Education', 'school-9', 'Computer Basics for Students', 'Nitin Bansal', 'Computer Science', 'computer-basics.jpg', 'A complete guide to Computer Basics for Students, with clear lessons, examples, and practice.'),
+    createDetailedBook('school', 'School Education', 'school-8', 'हिंदी भाषा और साहित्य (Hindi Literature)', 'Asha Tiwari', 'हिंदी साहित्य', 'assets/covers/hindi-literature.jpg', 'हिंदी भाषा, व्याकरण और आधुनिक एवं प्राचीन गद्य-पद्य साहित्य का संपूर्ण अध्ययन।'),
+    createDetailedBook('school', 'School Education', 'school-9', 'Computer Basics for Students', 'Nitin Bansal', 'Computer Science', 'assets/covers/computer-basics.jpg', 'A complete guide to Computer Basics for Students, with clear lessons, examples, and practice.'),
     createDetailedBook('school', 'School Education', 'school-10', 'Social Science and Indian Heritage', 'Ritu Sharma', 'Indian Heritage', 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&auto=format&fit=crop&q=80', 'Explore Indian civilizations, cultural history, geographical diversity, and democratic values.'),
     createDetailedBook('school', 'School Education', 'school-11', 'Practical Mathematics Workbook', 'Manoj Verma', 'Math Practice', 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80', 'Step-by-step problem sets, algebra drills, geometry constructions, and practical calculations.'),
-    createDetailedBook('school', 'School Education', 'school-12', 'English Communication Skills', 'Meena Joseph', 'Language Mastery', 'english-communication.jpg', 'A complete guide to improve your English communication skills, vocabulary, and active speaking.'),
-    createDetailedBook('school', 'School Education', 'school-13', 'Basic Economics for Young Learners', 'S. K. Gupta', 'Young Economics', 'basic-economics.jpg', 'A complete guide to Basic Economics for Young Learners covering markets, money, savings, and trade.'),
-    createDetailedBook('school', 'School Education', 'school-14', 'Art, Design and Creative Expression', 'Kavya Rao', 'Creative Arts', 'art-design-creative-expression.jpg', 'A complete guide to Art, Design and Creative Expression exploring color, perspective, drawing, and aesthetics.'),
-    createDetailedBook('school', 'School Education', 'school-15', 'Health, Yoga and Physical Education', 'Pooja Nair', 'Yoga & Wellness', 'health-yoga.jpg', 'A guide to a healthy lifestyle through yoga, fitness, pranayama, and physical education.'),
+    createDetailedBook('school', 'School Education', 'school-12', 'English Communication Skills', 'Meena Joseph', 'Language Mastery', 'assets/covers/english-communication.jpg', 'A complete guide to improve your English communication skills, vocabulary, and active speaking.'),
+    createDetailedBook('school', 'School Education', 'school-13', 'Basic Economics for Young Learners', 'S. K. Gupta', 'Young Economics', 'assets/covers/basic-economics.jpg', 'A complete guide to Basic Economics for Young Learners covering markets, money, savings, and trade.'),
+    createDetailedBook('school', 'School Education', 'school-14', 'Art, Design and Creative Expression', 'Kavya Rao', 'Creative Arts', 'assets/covers/art-design-creative-expression.jpg', 'A complete guide to Art, Design and Creative Expression exploring color, perspective, drawing, and aesthetics.'),
+    createDetailedBook('school', 'School Education', 'school-15', 'Health, Yoga and Physical Education', 'Pooja Nair', 'Yoga & Wellness', 'assets/covers/health-yoga.jpg', 'A guide to a healthy lifestyle through yoga, fitness, pranayama, and physical education.'),
 
     // Higher Education Books - Real Matching Covers
     createDetailedBook('higher', 'Higher Education', 'hi-8', 'Database Systems and Information Management', 'Prof. Sameer Kulkarni', 'Database Core', 'https://images.unsplash.com/photo-1544383835-bda2bc66a55d?w=600&auto=format&fit=crop&q=80', 'Relational models, SQL query optimization, transaction management, indexing, and NoSQL architecture.'),
@@ -92,25 +112,69 @@ document.addEventListener('DOMContentLoaded', () => {
     createDetailedBook('higher', 'Higher Education', 'hi-15', 'Introduction to Legal Studies', 'Dr. Farah Khan', 'Law & Justice', 'https://images.unsplash.com/photo-1589829545856-d10d557cf95f?w=600&auto=format&fit=crop&q=80', 'Constitutional jurisprudence, contracts, torts, human rights, and the legal dispute system.'),
 
     // Popular Books - Real Matching Covers
-    createDetailedBook('popular', 'Popular Book', 'pop-8', 'The 7 Habits of Highly Effective People', 'Stephen R. Covey', 'Productivity Classic', 'the-7-habits.png', 'A holistic, integrated approach for solving personal and professional problems and achieving effectiveness.'),
-    createDetailedBook('popular', 'Popular Book', 'pop-9', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', 'Personal Finance', 'rich-dad-poor-dad.png', 'What the rich teach their kids about money that the poor and middle class do not.'),
+    createDetailedBook('popular', 'Popular Book', 'pop-8', 'The 7 Habits of Highly Effective People', 'Stephen R. Covey', 'Productivity Classic', 'assets/covers/the-7-habits.png', 'A holistic, integrated approach for solving personal and professional problems and achieving effectiveness.'),
+    createDetailedBook('popular', 'Popular Book', 'pop-9', 'Rich Dad Poor Dad', 'Robert T. Kiyosaki', 'Personal Finance', 'assets/covers/rich-dad-poor-dad.png', 'What the rich teach their kids about money that the poor and middle class do not.'),
     createDetailedBook('popular', 'Popular Book', 'pop-10', 'Think and Grow Rich', 'Napoleon Hill', 'Wealth Mindset', 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&auto=format&fit=crop&q=80', 'Landmark principles on self-confidence, goal-setting, subconscious desire, and personal achievement.'),
     createDetailedBook('popular', 'Popular Book', 'pop-11', 'The Subtle Art of Not Giving a F*ck', 'Mark Manson', 'Self-Help Modern', 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80', 'A counterintuitive approach to living a good life by embracing life’s struggles and choosing what matters.'),
-    createDetailedBook('popular', 'Popular Book', 'pop-12', 'Pride and Prejudice', 'Jane Austen', 'Classic Literature', 'pride-and-prejudice.jpg', 'The iconic romantic masterwork following Elizabeth Bennet and Mr. Darcy through wit, class, and love.'),
-    createDetailedBook('popular', 'Popular Book', 'pop-13', 'The Kite Runner', 'Khaled Hosseini', 'Bestselling Fiction', 'the-kite-runner.png', 'An unforgettable story of friendship, betrayal, redemption, and the power of love in Afghanistan.'),
-    createDetailedBook('popular', 'Popular Book', 'pop-14', 'The Midnight Library', 'Matt Haig', 'Award-Winning Novel', 'https://images.unsplash.com/photo-1507842229452-7b99c750b3f5?w=600&auto=format&fit=crop&q=80', 'Between life and death there is a library where every book gives you a chance to try another life you could have lived.'),
-    createDetailedBook('popular', 'Popular Book', 'pop-15', 'The Silent Patient', 'Alex Michaelides', 'Psychological Thriller', 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=600&auto=format&fit=crop&q=80', 'A shocking psychological thriller of a woman’s act of violence against her husband—and of the therapist obsessed with uncovering her motive.'),
+    createStoryBook({ id: 'pop-12', title: 'Pride and Prejudice', author: 'Jane Austen', category: 'popular', categoryName: 'Popular Book', pages: 432, year: 1813, badge: 'Classic Literature', cover: 'assets/covers/pride-and-prejudice.jpg', description: 'The iconic romantic masterwork following Elizabeth Bennet and Mr. Darcy through wit, class, and love.' }, [
+      { title: 'The Bennet Family and Longbourn', summary: 'Elizabeth Bennet meets the pressures of family, fortune, and marriage at Longbourn.', detail: 'The arrival of new neighbors brings fresh expectations and sharp social observation.', reflection: 'Elizabeth values wit and independence, but first impressions begin to shape her judgment.' },
+      { title: 'A Ball at Netherfield', summary: 'The Netherfield gathering introduces Elizabeth to the Bingley family and the reserved Mr. Darcy.', detail: 'Conversation, dancing, and careless remarks reveal the class tensions beneath the evening.', reflection: 'Pride can hide uncertainty, while a quick opinion can become a lasting obstacle.' },
+      { title: 'The Proposal at Hunsford', summary: 'Elizabeth faces an unexpected proposal that challenges her understanding of love and character.', detail: 'Darcy explains his feelings, but his manner and assumptions make the offer impossible to accept.', reflection: 'A refusal can become the beginning of honest self-examination for both people.' },
+      { title: 'A Letter and a New Understanding', summary: 'Darcy writes to Elizabeth, forcing her to reconsider the story she has built around him.', detail: 'The letter reveals painful truths about Wickham and the Bennet family connection.', reflection: 'Self-knowledge begins when a person is willing to question their own certainty.' },
+      { title: 'Pemberley and First Impressions Revisited', summary: 'A visit to Pemberley shows Elizabeth another side of Darcy before they meet again.', detail: 'The estate, servants, and unexpected kindness complicate Elizabeths earlier judgment.', reflection: 'Character is often clearer in everyday actions than in polished conversation.' },
+      { title: 'The Crisis at Longbourn', summary: 'A family scandal places the Bennet sisters future and reputation in danger.', detail: 'Elizabeth sees how quickly society condemns a family when appearances collapse.', reflection: 'Love and loyalty are tested when private mistakes become public knowledge.' },
+      { title: 'Darcy Acts in Silence', summary: 'Darcy quietly works to protect Elizabeths family without asking for praise.', detail: 'His action changes the balance between pride, gratitude, and genuine affection.', reflection: 'A sincere change is shown through choices, not declarations.' },
+      { title: 'The Second Proposal', summary: 'Elizabeth and Darcy meet again with their misunderstandings finally exposed.', detail: 'Their conversation is gentler because both have learned from their earlier errors.', reflection: 'A relationship can grow when respect replaces assumption.' },
+      { title: 'Bingley and Jane Reunited', summary: 'Jane and Bingley overcome distance and interference to acknowledge their love.', detail: 'Their reunion brings joy to Longbourn and softens old family tensions.', reflection: 'Quiet affection can endure even when louder opinions get in the way.' },
+      { title: 'A New Chapter at Pemberley', summary: 'Elizabeth and Darcy look toward marriage with a clearer understanding of one another.', detail: 'The families begin to find a future built on affection rather than social performance.', reflection: 'The novel closes with love made stronger by humility, humor, and growth.' }
+    ]),
+    createStoryBook({ id: 'pop-13', title: 'The Kite Runner', author: 'Khaled Hosseini', category: 'popular', categoryName: 'Popular Book', pages: 400, year: 2003, badge: 'Bestselling Fiction', cover: 'assets/covers/the-kite-runner.png', description: 'An unforgettable story of friendship, betrayal, redemption, and the power of love in Afghanistan.' }, [
+      { title: 'Kabul and the Kite Tournament', summary: 'Amir grows up in Kabul with Hassan, the son of his fathers servant and his closest companion.', detail: 'The boys share stories, games, and kite-fighting dreams while their unequal positions remain unspoken.', reflection: 'Friendship can feel equal in childhood even when the world around it is not.' },
+      { title: 'The Winter of Betrayal', summary: 'After the tournament, Amir makes a choice that breaks Hassans trust and changes both lives.', detail: 'Fear and jealousy turn a moment of courage into one of the novels deepest wounds.', reflection: 'A single act can echo for years when guilt is left unanswered.' },
+      { title: 'Leaving Kabul', summary: 'War forces Amir and his father to leave Afghanistan and begin again in America.', detail: 'The journey separates them from home but cannot erase the memory of Hassan.', reflection: 'Migration offers safety while carrying the emotional weight of what was lost.' },
+      { title: 'A New Life in California', summary: 'Amir builds a life as a student and writer, but his past remains close beneath the surface.', detail: 'His relationship with Baba changes as both men adapt to a new country and new roles.', reflection: 'A new beginning does not automatically settle an old debt.' },
+      { title: 'Soraya and the Story of the Past', summary: 'Amir finds love with Soraya while learning that honesty can be painful and freeing.', detail: 'Their marriage gives Amir a home, yet his private shame still shapes his choices.', reflection: 'Intimacy grows when people risk revealing the parts they wish to hide.' },
+      { title: 'Rahim Khans Call', summary: 'A phone call from Rahim Khan tells Amir that there is a way to become good again.', detail: 'The message draws Amir back toward Afghanistan and the friendship he abandoned.', reflection: 'Redemption begins with accepting responsibility rather than seeking excuses.' },
+      { title: 'The Secret of Hassan', summary: 'Amir learns a family truth that changes how he understands Baba, Hassan, and himself.', detail: 'The revelation turns personal guilt into a responsibility that can no longer be avoided.', reflection: 'Truth may arrive late, but it still demands a response.' },
+      { title: 'The Orphanage and the Return', summary: 'Amir returns to a damaged Afghanistan to search for Hassans son, Sohrab.', detail: 'The journey exposes the cost of war and the danger surrounding children without protection.', reflection: 'Courage is not the absence of fear; it is choosing to act while afraid.' },
+      { title: 'The Kite and the Promise', summary: 'Amir tries to give Sohrab the care and safety that Hassan was denied.', detail: 'A kite becomes a small sign of healing between a guarded child and a determined guardian.', reflection: 'Repair is slow, but patient love can create room for trust.' },
+      { title: 'For You, a Thousand Times Over', summary: 'Amir carries Hassan\'s memory into a future shaped by care, forgiveness, and hope.', detail: 'The final kite run shows that redemption lives in continued responsibility, not one grand gesture.', reflection: 'The past cannot be changed, but the next choice can still matter.' }
+    ]),
+    createStoryBook({ id: 'pop-14', title: 'The Midnight Library', author: 'Matt Haig', category: 'popular', categoryName: 'Popular Book', pages: 304, year: 2026, badge: 'The International Bestseller', cover: 'assets/covers/the-midnight-library.png', description: 'Between life and death there is a library where every book gives you a chance to try another life you could have lived.' }, [
+      { title: 'The Last Day of Nora Seed', summary: 'Nora Seed feels crushed by regret, loneliness, and the belief that every important possibility has closed.', detail: 'A series of painful events leaves her suspended between continuing and giving up.', reflection: 'Despair can make one difficult day look like a complete definition of a life.' },
+      { title: 'The Midnight Library', summary: 'Nora wakes in an endless library where every book contains a different version of her life.', detail: 'Mrs Elm, a familiar librarian, explains that the shelves hold the lives Nora might have lived.', reflection: 'Possibility can feel overwhelming when regret has been the only map.' },
+      { title: 'The Life of the Swimmer', summary: 'Nora enters a life built around Olympic swimming and discovers success does not erase every fear.', detail: 'Achievement brings admiration, but the new life carries pressures she never imagined.', reflection: 'A dream can be real and still fail to answer every emotional need.' },
+      { title: 'The Vineyard in France', summary: 'Another book places Nora in a peaceful vineyard with a different partner and a different routine.', detail: 'The beauty of the setting is genuine, yet belonging cannot be borrowed from a fantasy.', reflection: 'A good life is more than scenery; it is also connection and inner acceptance.' },
+      { title: 'The Arctic Research Station', summary: 'Nora experiences a life of scientific discovery in a remote and dangerous landscape.', detail: 'The isolation gives her clarity but also shows the cost of escaping every ordinary attachment.', reflection: 'Purpose is strongest when it connects curiosity with people and care.' },
+      { title: 'The Musician on Stage', summary: 'Nora tries a life of music and fame, confronting the difference between public applause and private peace.', detail: 'The stage offers excitement, but performance cannot permanently silence self-doubt.', reflection: 'Recognition is not the same thing as being understood.' },
+      { title: 'The Life with Ash', summary: 'Nora explores a life where an old relationship took a different path and sees its hidden compromises.', detail: 'The imagined future includes love, but also responsibilities and conflicts she once ignored.', reflection: 'Regret edits out the ordinary difficulties that belong to every real life.' },
+      { title: 'The Book of Regrets', summary: 'Nora confronts the regrets that brought her to the library and begins to see them differently.', detail: 'Each regret becomes evidence of a choice, a relationship, or a possibility rather than a final verdict.', reflection: 'Understanding the past can loosen its grip without pretending it never hurt.' },
+      { title: 'The Empty Library', summary: 'When the library begins to change, Nora realizes that no alternate life can be perfect.', detail: 'The boundary between possibilities and her original life grows urgent and frightening.', reflection: 'The value of a life is not measured by the absence of problems.' },
+      { title: 'Choosing to Live', summary: 'Nora chooses her own unfinished life and returns with a new willingness to make small changes.', detail: 'The future is still uncertain, but uncertainty now feels like space rather than a sentence.', reflection: 'Hope begins when a person accepts that a life can change one choice at a time.' }
+    ]),
+    createStoryBook({ id: 'pop-15', title: 'The Silent Patient', author: 'Alex Michaelides', category: 'popular', categoryName: 'Popular Book', pages: 336, year: 2019, badge: 'Psychological Thriller', cover: 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=600&auto=format&fit=crop&q=80', description: 'A psychological thriller about a woman who stops speaking after a violent act and the therapist determined to uncover her motive.' }, [
+      { title: 'The Night in the Studio', summary: 'Alicia Berenson is found beside her husband after a shooting and refuses to explain what happened.', detail: 'Her silence turns the case into a public mystery and fixes her image in the newspapers.', reflection: 'When a voice disappears, other people rush to speak for it.' },
+      { title: 'The Grove and the Portrait', summary: 'Alicias portrait and private life reveal an artist admired by the public but difficult to know closely.', detail: 'The contrast between her paintings and her silence makes the case more unsettling.', reflection: 'Art can communicate emotion while still concealing a persons intentions.' },
+      { title: 'The New Therapist', summary: 'Theo Faber joins the Grove with a personal determination to help Alicia speak again.', detail: 'His professional interest is mixed with an emotional connection to the case.', reflection: 'A rescuers motives can be as complicated as the patients wounds.' },
+      { title: 'The First Sessions', summary: 'Theo studies Alicias routines, drawings, and guarded behavior while the staff debate her prognosis.', detail: 'Small gestures become clues, but every interpretation risks becoming projection.', reflection: 'Therapy depends on attention, patience, and respect for what cannot yet be said.' },
+      { title: 'The Family Circle', summary: 'Friends and relatives offer conflicting accounts of Alicia and the marriage she shared with Gabriel.', detail: 'Their memories reveal jealousy, loyalty, and the gaps that surround a public tragedy.', reflection: 'A shared history can look different from every side of a relationship.' },
+      { title: 'The Hidden Diary', summary: 'A private diary gives Theo a path into Alicias fears and the events before the shooting.', detail: 'The entries suggest that someone was watching the house and that danger had been anticipated.', reflection: 'Evidence becomes dangerous when it confirms only the story someone wants to believe.' },
+      { title: 'The House Across the Way', summary: 'Theo follows a lead connected to the neighbors and the night Alicia stopped speaking.', detail: 'The investigation moves beyond the clinic into a web of secrets and concealed resentment.', reflection: 'The search for truth can expose how much investigators have hidden from themselves.' },
+      { title: 'The Price of Obsession', summary: 'Theos pursuit begins to damage his own relationships and judgment.', detail: 'The case becomes personal enough that professional boundaries start to blur.', reflection: 'Compassion without boundaries can become another form of control.' },
+      { title: 'The Final Painting', summary: 'Alicias last painting brings the central mystery into focus and challenges Theos version of events.', detail: 'The image carries a message that cannot be dismissed as coincidence.', reflection: 'The final clue matters because it changes who the audience believes.' },
+      { title: 'The Truth Behind the Silence', summary: 'The hidden sequence of betrayal, fear, and violence is finally revealed.', detail: 'Theo and Alicia face the consequences of a truth that has been delayed but not destroyed.', reflection: 'Silence may protect a person for a time, but it cannot erase what happened.' }
+    ]),
 
     // IT Books - Real Matching Covers
-    createDetailedBook('it', 'IT Book', 'it-7', 'DevOps and Continuous Delivery', 'Rohan Mallick', 'DevOps & CI/CD', 'devops-continuous-delivery.jpg', 'Automated pipelines, Infrastructure as Code, Terraform, Docker packaging, and modern deployment strategies.'),
-    createDetailedBook('it', 'IT Book', 'it-8', 'Mobile App Development with Flutter', 'Neel Joshi', 'Mobile Apps', 'mobile-app-flutter.jpg', 'Cross-platform mobile apps for iOS and Android using Flutter widgets, Dart language, and state management.'),
-    createDetailedBook('it', 'IT Book', 'it-9', 'Computer Networks and Internet Protocols', 'Sanjay Pillai', 'Networking Core', 'computer-networks.jpg', 'TCP/IP stack, DNS, HTTP/3, routing algorithms, socket programming, and secure communication.'),
-    createDetailedBook('it', 'IT Book', 'it-10', 'Machine Learning Engineering', 'Dr. Tara Bose', 'Applied ML', 'machine-learning-engineering.jpg', 'MLOps pipelines, feature stores, distributed model training, inference latency optimization, and monitoring.'),
-    createDetailedBook('it', 'IT Book', 'it-11', 'UX Design and Human Computer Interaction', 'Ananya Kapoor', 'UI/UX Design', 'ux-design-hci.jpg', 'User research, wireframing, Figma design systems, usability testing, and emotional design psychology.'),
-    createDetailedBook('it', 'IT Book', 'it-12', 'Software Architecture Patterns', 'Vivek Reddy', 'System Design', 'software-architecture-patterns.jpg', 'Clean architecture, event-driven systems, domain-driven design (DDD), CQRS, and high-scale backends.'),
-    createDetailedBook('it', 'IT Book', 'it-13', 'Blockchain and Distributed Applications', 'Aditya Mehra', 'Web3 & Crypto', 'blockchain-distributed.jpg', 'Consensus mechanisms, smart contracts in Solidity, decentralized storage, and Web3 security protocols.'),
-    createDetailedBook('it', 'IT Book', 'it-14', 'Natural Language Processing', 'Dr. Mira Thomas', 'NLP & LLMs', 'natural-language-processing.jpg', 'Tokenization, word embeddings, transformer models, semantic search, sentiment analysis, and conversational AI.'),
-    createDetailedBook('it', 'IT Book', 'it-15', 'Site Reliability Engineering', 'Kunal Chatterjee', 'Cloud Reliability', 'site-reliability-engineering.jpg', 'SLIs, SLOs, error budgets, incident postmortems, canary releases, and distributed chaos testing.')
+    createDetailedBook('it', 'IT Book', 'it-7', 'DevOps and Continuous Delivery', 'Rohan Mallick', 'DevOps & CI/CD', 'assets/covers/devops-continuous-delivery.jpg', 'Automated pipelines, Infrastructure as Code, Terraform, Docker packaging, and modern deployment strategies.'),
+    createDetailedBook('it', 'IT Book', 'it-8', 'Mobile App Development with Flutter', 'Neel Joshi', 'Mobile Apps', 'assets/covers/mobile-app-flutter.jpg', 'Cross-platform mobile apps for iOS and Android using Flutter widgets, Dart language, and state management.'),
+    createDetailedBook('it', 'IT Book', 'it-9', 'Computer Networks and Internet Protocols', 'Sanjay Pillai', 'Networking Core', 'assets/covers/computer-networks.jpg', 'TCP/IP stack, DNS, HTTP/3, routing algorithms, socket programming, and secure communication.'),
+    createDetailedBook('it', 'IT Book', 'it-10', 'Machine Learning Engineering', 'Dr. Tara Bose', 'Applied ML', 'assets/covers/machine-learning-engineering.jpg', 'MLOps pipelines, feature stores, distributed model training, inference latency optimization, and monitoring.'),
+    createDetailedBook('it', 'IT Book', 'it-11', 'UX Design and Human Computer Interaction', 'Ananya Kapoor', 'UI/UX Design', 'assets/covers/ux-design-hci.jpg', 'User research, wireframing, Figma design systems, usability testing, and emotional design psychology.'),
+    createDetailedBook('it', 'IT Book', 'it-12', 'Software Architecture Patterns', 'Vivek Reddy', 'System Design', 'assets/covers/software-architecture-patterns.jpg', 'Clean architecture, event-driven systems, domain-driven design (DDD), CQRS, and high-scale backends.'),
+    createDetailedBook('it', 'IT Book', 'it-13', 'Blockchain and Distributed Applications', 'Aditya Mehra', 'Web3 & Crypto', 'assets/covers/blockchain-distributed.jpg', 'Consensus mechanisms, smart contracts in Solidity, decentralized storage, and Web3 security protocols.'),
+    createDetailedBook('it', 'IT Book', 'it-14', 'Natural Language Processing', 'Dr. Mira Thomas', 'NLP & LLMs', 'assets/covers/natural-language-processing.jpg', 'Tokenization, word embeddings, transformer models, semantic search, sentiment analysis, and conversational AI.'),
+    createDetailedBook('it', 'IT Book', 'it-15', 'Site Reliability Engineering', 'Kunal Chatterjee', 'Cloud Reliability', 'assets/covers/site-reliability-engineering.jpg', 'SLIs, SLOs, error budgets, incident postmortems, canary releases, and distributed chaos testing.')
   ];
 
   const allBooks = [...BOOKS_DATA, ...additionalBooks, ...categoryExpansion];
@@ -122,12 +186,12 @@ document.addEventListener('DOMContentLoaded', () => {
   const registerForm = document.getElementById('register-form');
   const tabLogin = document.getElementById('tab-login');
   const tabRegister = document.getElementById('tab-register');
-  const quickDemoStudentBtn = document.getElementById('quick-demo-student-btn');
-  const quickDemoItBtn = document.getElementById('quick-demo-it-btn');
   const logoutBtn = document.getElementById('logout-btn');
   const userDisplayName = document.getElementById('user-display-name');
   const userRoleLabel = document.getElementById('user-role-label');
   const userAvatarInitials = document.getElementById('user-avatar-initials');
+  const welcomeMessage = document.getElementById('welcome-message');
+  const welcomeUserName = document.getElementById('welcome-user-name');
 
   const prefCards = document.querySelectorAll('.pref-card');
   const btnShowAllBooks = document.getElementById('btn-show-all-books');
@@ -237,6 +301,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (!currentUser) return;
     userDisplayName.textContent = currentUser.name;
     userRoleLabel.textContent = currentUser.role || 'Member';
+    welcomeUserName.textContent = currentUser.name.toUpperCase();
     const initials = currentUser.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
     userAvatarInitials.textContent = initials || 'HB';
   }
@@ -249,15 +314,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     checkAuthState();
   }
-
-  // Quick Demo Buttons
-  quickDemoStudentBtn.addEventListener('click', () => {
-    loginUser('Aarav Sharma', 'aarav.student@hamarabook.com', 'High School Scholar', 'school');
-  });
-
-  quickDemoItBtn.addEventListener('click', () => {
-    loginUser('Rohan Verma', 'rohan.tech@hamarabook.com', 'Full-Stack Developer', 'it');
-  });
 
   // Standard Login Form
   loginForm.addEventListener('submit', (e) => {
@@ -371,6 +427,119 @@ document.addEventListener('DOMContentLoaded', () => {
     renderBooks();
   });
 
+  // --- RESILIENT COVER FALLBACK & DATA-URI GENERATOR (For Cloud Deployments) ---
+  const ONLINE_FALLBACK_COVERS = {
+    // Popular Books
+    'pop-1': 'https://covers.openlibrary.org/b/id/12977821-L.jpg',
+    'pop-2': 'https://covers.openlibrary.org/b/id/10574921-L.jpg',
+    'pop-3': 'https://covers.openlibrary.org/b/id/10565863-L.jpg',
+    'pop-4': 'https://covers.openlibrary.org/b/id/12204652-L.jpg',
+    'pop-5': 'https://images.unsplash.com/photo-1495446815901-a7297e633e8d?w=600&auto=format&fit=crop&q=80',
+    'pop-6': 'https://images.unsplash.com/photo-1544947950-fa07a98d237f?w=600&auto=format&fit=crop&q=80',
+    'pop-7': 'https://images.unsplash.com/photo-1516979187457-637abb4f9353?w=600&auto=format&fit=crop&q=80',
+    'pop-8': 'https://covers.openlibrary.org/isbn/9781982137274-L.jpg',
+    'pop-9': 'https://covers.openlibrary.org/isbn/9781612681139-L.jpg',
+    'pop-10': 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&auto=format&fit=crop&q=80',
+    'pop-11': 'https://images.unsplash.com/photo-1512820790803-83ca734da794?w=600&auto=format&fit=crop&q=80',
+    'pop-12': 'https://covers.openlibrary.org/isbn/9780141439518-L.jpg',
+    'pop-13': 'https://covers.openlibrary.org/isbn/9781594631931-L.jpg',
+    'pop-14': 'https://covers.openlibrary.org/isbn/9780525559474-L.jpg',
+    'pop-15': 'https://images.unsplash.com/photo-1476275466078-4007374efbbe?w=600&auto=format&fit=crop&q=80',
+
+    // IT Books
+    'it-1': 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=600&auto=format&fit=crop&q=80',
+    'it-2': 'https://images.unsplash.com/photo-1677442136019-21780efad99a?w=600&auto=format&fit=crop&q=80',
+    'it-3': 'https://images.unsplash.com/photo-1667372393119-3d4c48d07fc9?w=600&auto=format&fit=crop&q=80',
+    'it-4': 'https://images.unsplash.com/photo-1526379095098-d400fd0bf935?w=600&auto=format&fit=crop&q=80',
+    'it-5': 'https://images.unsplash.com/photo-1563013544-824ae1b704d3?w=600&auto=format&fit=crop&q=80',
+    'it-6': 'https://images.unsplash.com/photo-1515879218367-8466d910aaa4?w=600&auto=format&fit=crop&q=80',
+    'it-7': 'https://images.unsplash.com/photo-1618401471353-b98afee0b2eb?w=600&auto=format&fit=crop&q=80',
+    'it-8': 'https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=600&auto=format&fit=crop&q=80',
+    'it-9': 'https://images.unsplash.com/photo-1544197150-b99a580bb7a8?w=600&auto=format&fit=crop&q=80',
+    'it-10': 'https://images.unsplash.com/photo-1555255707-c07966088b7b?w=600&auto=format&fit=crop&q=80',
+    'it-11': 'https://images.unsplash.com/photo-1581291518857-4e27b48ff24e?w=600&auto=format&fit=crop&q=80',
+    'it-12': 'https://images.unsplash.com/photo-1504639725590-34d0984388bd?w=600&auto=format&fit=crop&q=80',
+    'it-13': 'https://images.unsplash.com/photo-1639762681485-074b7f938ba0?w=600&auto=format&fit=crop&q=80',
+    'it-14': 'https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?w=600&auto=format&fit=crop&q=80',
+    'it-15': 'https://images.unsplash.com/photo-1551836022-d5d88e9218df?w=600&auto=format&fit=crop&q=80',
+
+    // School Books
+    'sch-1': 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80',
+    'sch-2': 'https://images.unsplash.com/photo-1532094349884-543bc11b234d?w=600&auto=format&fit=crop&q=80',
+    'sch-3': 'https://images.unsplash.com/photo-1461360370896-922624d12aa1?w=600&auto=format&fit=crop&q=80',
+    'sch-4': 'https://images.unsplash.com/photo-1530210124550-912dc1381cb8?w=600&auto=format&fit=crop&q=80',
+    'sch-5': 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&auto=format&fit=crop&q=80',
+    'sch-6': 'https://images.unsplash.com/photo-1636466497217-26a8cbeaf0aa?w=600&auto=format&fit=crop&q=80',
+    'sch-7': 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&auto=format&fit=crop&q=80',
+    'school-8': 'https://images.unsplash.com/photo-1457369804613-52c61a468e7d?w=600&auto=format&fit=crop&q=80',
+    'school-9': 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop&q=80',
+    'school-10': 'https://images.unsplash.com/photo-1524492412937-b28074a5d7da?w=600&auto=format&fit=crop&q=80',
+    'school-11': 'https://images.unsplash.com/photo-1509228468518-180dd4864904?w=600&auto=format&fit=crop&q=80',
+    'school-12': 'https://images.unsplash.com/photo-1455390582262-044cdead277a?w=600&auto=format&fit=crop&q=80',
+    'school-13': 'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=600&auto=format&fit=crop&q=80',
+    'school-14': 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?w=600&auto=format&fit=crop&q=80',
+    'school-15': 'https://images.unsplash.com/photo-1545205597-3d9d02c29597?w=600&auto=format&fit=crop&q=80'
+  };
+
+  function createSvgCoverDataUri(title, author, categoryName, badge) {
+    const isIT = (categoryName && categoryName.includes('IT')) || (title && (title.includes('Web') || title.includes('AI') || title.includes('Python') || title.includes('Cloud')));
+    const isPopular = (categoryName && categoryName.includes('Popular')) || (badge && badge.includes('Bestseller'));
+    const isSchool = categoryName && categoryName.includes('School');
+
+    const gradStart = isIT ? '#0f172a' : isPopular ? '#3b0764' : isSchool ? '#064e3b' : '#1e1b4b';
+    const gradEnd = isIT ? '#1e293b' : isPopular ? '#701a75' : isSchool ? '#047857' : '#312e81';
+    const accent = isIT ? '#38bdf8' : isPopular ? '#f472b6' : isSchool ? '#34d399' : '#a78bfa';
+
+    const safeTitle = (title || 'Book Title').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const safeAuthor = (author || 'Author').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    const safeBadge = (badge || categoryName || 'Book').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+    const svg = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 300 420" width="300" height="420">
+      <defs>
+        <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="${gradStart}"/>
+          <stop offset="100%" stop-color="${gradEnd}"/>
+        </linearGradient>
+      </defs>
+      <rect width="300" height="420" rx="14" fill="url(#grad)"/>
+      <rect x="14" y="14" width="272" height="392" rx="10" fill="none" stroke="${accent}" stroke-opacity="0.35" stroke-width="1.5"/>
+      <rect x="22" y="26" width="256" height="24" rx="6" fill="${accent}" fill-opacity="0.15"/>
+      <text x="150" y="42" fill="${accent}" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1.5">${safeBadge.toUpperCase().slice(0, 32)}</text>
+      <circle cx="150" cy="140" r="44" fill="${accent}" fill-opacity="0.1"/>
+      <path d="M130 130 h40 v24 h-40 z M135 120 h30 v6 h-30 z" fill="${accent}"/>
+      <text x="150" y="215" fill="#ffffff" font-family="system-ui, -apple-system, sans-serif" font-size="16" font-weight="800" text-anchor="middle">
+        ${safeTitle.length > 24 ? `<tspan x="150" dy="0">${safeTitle.slice(0, 22)}...</tspan><tspan x="150" dy="22">${safeTitle.slice(22, 46)}</tspan>` : safeTitle}
+      </text>
+      <line x1="50" y1="280" x2="250" y2="280" stroke="${accent}" stroke-opacity="0.4" stroke-width="1"/>
+      <text x="150" y="310" fill="#94a3b8" font-family="system-ui, -apple-system, sans-serif" font-size="13" font-weight="500" text-anchor="middle">By ${safeAuthor}</text>
+      <rect x="90" y="360" width="120" height="24" rx="6" fill="#ffffff" fill-opacity="0.08"/>
+      <text x="150" y="376" fill="#e2e8f0" font-family="system-ui, -apple-system, sans-serif" font-size="10" font-weight="700" text-anchor="middle" letter-spacing="1">HAMARA BOOK</text>
+    </svg>`;
+
+    return 'data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg);
+  }
+
+  function handleCoverError(img, bookId) {
+    if (!img) return;
+    if (img.dataset.hasFailedOnce === 'true') {
+      // Second fallback: generate 100% offline SVG
+      const book = allBooks.find(b => b.id === bookId) || {};
+      img.onerror = null;
+      img.src = createSvgCoverDataUri(book.title, book.author, book.categoryName, book.badge);
+      return;
+    }
+
+    img.dataset.hasFailedOnce = 'true';
+    if (ONLINE_FALLBACK_COVERS[bookId]) {
+      img.src = ONLINE_FALLBACK_COVERS[bookId];
+    } else {
+      const book = allBooks.find(b => b.id === bookId) || {};
+      img.onerror = null;
+      img.src = createSvgCoverDataUri(book.title, book.author, book.categoryName, book.badge);
+    }
+  }
+  window.handleCoverError = handleCoverError;
+
   // --- 4. RENDER BOOKS CATALOG ---
   function renderBooks() {
     let filtered = allBooks.filter(book => {
@@ -408,7 +577,7 @@ document.addEventListener('DOMContentLoaded', () => {
           
           <!-- Book Cover Image with Badge -->
           <div class="relative aspect-[3/4] w-full overflow-hidden bg-slate-900 rounded-t-2xl">
-            <img src="${book.cover}" alt="${book.title}" class="h-full w-full object-cover object-center group-hover:scale-105 transition duration-500">
+            <img src="${book.cover}" alt="${book.title}" onerror="handleCoverError(this, '${book.id}')" loading="lazy" class="h-full w-full object-cover object-center group-hover:scale-105 transition duration-500">
             <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-60"></div>
             
             <!-- Category Badge -->
@@ -865,7 +1034,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     bookmarksList.innerHTML = saved.map(b => `
       <div class="bookmark-item flex items-center justify-between p-3 rounded-xl bg-slate-900 border border-slate-800 gap-3">
-        <img src="${b.cover}" class="w-12 h-16 rounded-lg object-cover">
+        <img src="${b.cover}" onerror="handleCoverError(this, '${b.id}')" class="w-12 h-16 rounded-lg object-cover">
         <div class="flex-1 min-w-0">
           <p class="book-item-title text-sm font-bold text-white truncate">${b.title}</p>
           <p class="text-xs text-emerald-400 truncate">${b.author} • 10 Chapters</p>
@@ -1318,7 +1487,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="video-card group rounded-2xl bg-[#0e1628] border border-slate-800 shadow-xl overflow-hidden flex flex-col cursor-pointer" onclick="openVideoPlayer('${video.id}')">
           <!-- Thumbnail Container -->
           <div class="relative w-full aspect-video overflow-hidden bg-slate-900">
-            <img src="${video.thumbnail}" alt="${video.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
+            <img src="${video.thumbnail}" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&auto=format&fit=crop&q=80';" alt="${video.title}" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" loading="lazy">
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
             
             <!-- Duration Badge -->
@@ -1417,6 +1586,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (companionBook && videoCompanionBookCard) {
       videoCompanionBookCard.classList.remove('hidden');
       videoCompanionBookCover.src = companionBook.cover;
+      videoCompanionBookCover.onerror = function() { handleCoverError(this, companionBook.id); };
       videoCompanionBookCover.alt = companionBook.title;
       videoCompanionBookTitle.textContent = companionBook.title;
       videoCompanionBookAuthor.textContent = `${companionBook.author} • ${companionBook.categoryName}`;

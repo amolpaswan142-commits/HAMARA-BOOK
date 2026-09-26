@@ -9,7 +9,7 @@ const BOOKS_DATA = [
     "pages": 380,
     "year": 2022,
     "badge": "#1 TikTok & Global Sensation",
-    "cover": "i-fell-in-love-with-hope.png",
+    "cover": "assets/covers/i-fell-in-love-with-hope.png",
     "description": "A breathtaking story of a group of terminally ill patients in a hospital who choose to live fiercely, embracing hope, rebellion, and deep unconditional love.",
     "chapters": [
       {
@@ -118,7 +118,7 @@ const BOOKS_DATA = [
     "pages": 416,
     "year": 2020,
     "badge": "NYT Bestselling Mystery",
-    "cover": "good-girl-bad-blood.png",
+    "cover": "assets/covers/good-girl-bad-blood.png",
     "description": "Pip Fitz-Amobi is determined to leave detective work behind after her true-crime podcast goes viral, until an urgent disappearance forces her back into the dark underbelly of Little Kilton.",
     "chapters": [
       {
@@ -227,7 +227,7 @@ const BOOKS_DATA = [
     "pages": 256,
     "year": 2020,
     "badge": "International Bestseller",
-    "cover": "the-psychology-of-money.png",
+    "cover": "assets/covers/the-psychology-of-money.png",
     "description": "Timeless lessons on wealth, greed, and happiness exploring how people make financial choices driven by emotions, ego, and personal history rather than pure mathematics.",
     "chapters": [
       {
@@ -336,7 +336,7 @@ const BOOKS_DATA = [
     "pages": 384,
     "year": 2021,
     "badge": "New York Times Bestseller",
-    "cover": "the-love-hypothesis.png",
+    "cover": "assets/covers/the-love-hypothesis.png",
     "description": "A STEMinist rom-com about Ph.D. candidate Olive Smith who panics and kisses the first man she sees—who turns out to be Dr. Adam Carlsen, the department's most dreaded professor.",
     "chapters": [
       {
@@ -445,7 +445,7 @@ const BOOKS_DATA = [
     "pages": 480,
     "year": 2024,
     "badge": "Trending in Tech",
-    "cover": "fullstack-mern-nextjs.jpg",
+    "cover": "assets/covers/fullstack-mern-nextjs.jpg",
     "description": "Master modern full-stack web applications from front-end React & Next.js to Node.js backend architectures and cloud deployment.",
     "chapters": [
       {
@@ -554,7 +554,7 @@ const BOOKS_DATA = [
     "pages": 560,
     "year": 2025,
     "badge": "AI Bestseller",
-    "cover": "ai-generative-models.jpg",
+    "cover": "assets/covers/ai-generative-models.jpg",
     "description": "Comprehensive guide to transformers, neural attention mechanisms, LLM architectures, fine-tuning, and practical agentic workflows.",
     "chapters": [
       {
@@ -663,7 +663,7 @@ const BOOKS_DATA = [
     "pages": 420,
     "year": 2024,
     "badge": "DevOps Essential",
-    "cover": "cloud-native-kubernetes.jpg",
+    "cover": "assets/covers/cloud-native-kubernetes.jpg",
     "description": "Design resilient microservices, configure container orchestration, and establish automated CI/CD pipelines across AWS, Azure, and GCP.",
     "chapters": [
       {
@@ -772,7 +772,7 @@ const BOOKS_DATA = [
     "pages": 510,
     "year": 2024,
     "badge": "Most Popular Tech",
-    "cover": "python-data-science.jpg",
+    "cover": "assets/covers/python-data-science.jpg",
     "description": "The complete guide to Python data analysis with NumPy, Pandas, Scikit-Learn, data structures, and algorithmic interview preparation.",
     "chapters": [
       {
@@ -1765,7 +1765,7 @@ const PREFERENCE_CATEGORIES = [
     id: 'popular',
     title: 'Popular Book',
     subtitle: 'Trending & Popular',
-    image: 'good-girl-bad-blood.png',
+    image: 'assets/covers/the-midnight-library.png',
     description: 'World bestsellers, thriller, romance, finance & mindset'
   },
   {
